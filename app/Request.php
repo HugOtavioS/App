@@ -13,4 +13,8 @@ class Request {
     public function getMethod ():string {
         return $_SERVER['REQUEST_METHOD'];
     }
+
+    public function redirect (string $url, int $code = 301):void {
+        header('Location: '. $url, true, $code);
+    }
 }
