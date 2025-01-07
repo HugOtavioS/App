@@ -2,16 +2,25 @@
 namespace Config\Database\Operations;
 
 use Config\Database\Interfaces\InsertableInterface;
+use Config\Database\Interfaces\DatabaseOperationInterface;
+use Config\database;
 use PDO;
 use App\Utils;
 
-class Insert implements InsertableInterface {
+class Insert extends database implements InsertableInterface, DatabaseOperationInterface {
     private PDO $pdo;
     private $utils;
+    private database $db;
 
-    public function __construct(PDO $pdo) {
-        $this->pdo = $pdo;
+    public function __construct() {
+        $this->db = new database();
         $this->utils = new Utils();
+
+        $this->pdo = $this->db->connect();
+    }
+
+    public function execute (...$args) {
+        return $this->insert(...$args);
     }
 
     public function insert (string $table, array $dados) {

@@ -2,16 +2,23 @@
 namespace Config\Database\Operations;
 
 use Config\Database\Interfaces\SelectableInterface;
+use Config\Database\Interfaces\DatabaseOperationInterface;
+use Config\database;
 use PDO;
 use App\Utils;
 
-class Select implements SelectableInterface {
+class Select extends database implements SelectableInterface, DatabaseOperationInterface {
     private PDO $pdo;
     private $utils;
 
-    public function __construct(PDO $pdo) {
-        $this->pdo = $pdo;
+    public function __construct() {
         $this->utils = new Utils();
+        parent::__construct();
+        $this->pdo = $this->connect();
+    }
+
+    public function execute (...$args) {
+        return $this->select(...$args);
     }
 
     public function select (array $cols, string $table, array $cond, string $operation) {

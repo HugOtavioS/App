@@ -7,6 +7,7 @@ use Config\env;
 use App\Utils;
 use Config\Database\Operations\Select;
 use Config\Database\Operations\Insert;
+use Config\Database\Interfaces\DatabaseOperationInterface;
 
 /** Manipular e Lidar com o banco de dados */
 class database {
@@ -15,19 +16,15 @@ class database {
     private $utils;
     private Select $select;
     private Insert $insert;
+    private static array $operations = [];
 
     public function __construct() {
         $this->env = new env();
         $this->env = $this->env->getenvDB();
         $this->utils = new Utils();
-
-        $this->connect();
-
-        $this->select = new Select($this->pdo);
-        $this->insert = new Insert($this->pdo);
     }
 
-    private function connect(): PDO|null {
+    protected function connect(): PDO|null {
         $dsn = 'mysql:dbname=' . $this->env['DB_NAME'] . ';host=' . $this->env['DB_HOST'];
         $username = $this->env['DB_USER'];
         $password = $this->env['DB_PASS'];
@@ -42,11 +39,19 @@ class database {
         }
     }
 
-    public function select (array $cols, string $table, array $cond, string $operation) {
-        return $this->select->select($cols, $table, $cond, $operation);
+    public static function registerOperation(string $name, DatabaseOperationInterface $operation): void {
+
+        self::$operations[$name] = $operation;
+
     }
 
-    public function insert (string $table, array $dados) {
-        return $this->insert->insert($table, $dados);
+    public function __call ($name, $args) {
+        if (isset(self::$operations[$name])) {
+
+            return self::$operations[$name]->execute(...$args);
+
+        }
+
+        throw new \BadMethodCallException("Operação '$name' não encontrada.");
     }
 }
