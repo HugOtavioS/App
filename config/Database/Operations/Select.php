@@ -10,12 +10,10 @@ use App\Utils;
 class Select extends database implements SelectableInterface, DatabaseOperationInterface {
     private PDO $pdo;
     private $utils;
-    private database $db;
 
-    public function __construct(database $db, Utils $utils) {
+    public function __construct(Utils $utils) {
 
         $this->utils = $utils;
-        $this->db = $db;
         $this->pdo = $this->connect();
 
     }

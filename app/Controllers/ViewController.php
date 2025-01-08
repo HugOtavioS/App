@@ -13,7 +13,7 @@ class ViewController {
 
     private function createParams (array $params) {
         foreach ($params as $key => $value) {
-            $this->$key = $value;
+            @$this->$key = $value;
         }
     }
 }

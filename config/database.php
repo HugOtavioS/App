@@ -8,22 +8,22 @@ use Config\Database\Interfaces\DatabaseOperationInterface;
 
 /** Manipular e Lidar com o banco de dados */
 class database {
-    private $env;
+    private static $env;
     private $pdo;
     private static array $operations = [];
 
     public function __construct(env $env) {
 
-        $this->env = $env;
-        $this->env = $this->env->getenvDB();
+        self::$env = $env;
+        self::$env = self::$env->getenvDB();
 
     }
 
     protected function connect(): PDO|null {
 
-        $dsn = 'mysql:dbname=' . $this->env['DB_NAME'] . ';host=' . $this->env['DB_HOST'];
-        $username = $this->env['DB_USER'];
-        $password = $this->env['DB_PASS'];
+        $dsn = 'mysql:dbname=' . self::$env['DB_NAME'] . ';host=' . self::$env['DB_HOST'];
+        $username = self::$env['DB_USER'];
+        $password = self::$env['DB_PASS'];
 
         try {
             $this->pdo = new PDO($dsn, $username, $password);
