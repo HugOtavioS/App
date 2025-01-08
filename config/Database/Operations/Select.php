@@ -10,36 +10,46 @@ use App\Utils;
 class Select extends database implements SelectableInterface, DatabaseOperationInterface {
     private PDO $pdo;
     private $utils;
+    private database $db;
 
-    public function __construct() {
-        $this->utils = new Utils();
-        parent::__construct();
+    public function __construct(database $db, Utils $utils) {
+
+        $this->utils = $utils;
+        $this->db = $db;
         $this->pdo = $this->connect();
+
     }
 
     public function execute (...$args) {
+
         return $this->select(...$args);
+
     }
 
     public function select (array $cols, string $table, array $cond, string $operation) {
+
         $query = $this->constructQuery($cols, $table, $cond, $operation);
         
         $stmt = $this->pdo->prepare($query);
         $stmt->execute();
 
         return $stmt->fetchAll();
+        
     }
 
     private function constructQuery ($cols, $table, $cond, $operation):string {
+
         $cols = implode(", ", $cols);
 
         $query = "SELECT $cols FROM $table WHERE ";
         $query .= $this->formatWhereConditions($cond, $operation).";";
 
         return $query;
+
     }
 
     private function formatWhereConditions (array $cond, string $op) {
+
         $i = [];
 
         foreach ($cond as $key => $value) {
@@ -47,5 +57,6 @@ class Select extends database implements SelectableInterface, DatabaseOperationI
         }
         
         return $this->utils->arrayToString($i, $op);
+        
     }
 }

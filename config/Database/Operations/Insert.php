@@ -12,30 +12,37 @@ class Insert extends database implements InsertableInterface, DatabaseOperationI
     private $utils;
     private database $db;
 
-    public function __construct() {
-        $this->db = new database();
-        $this->utils = new Utils();
+    public function __construct(database $db, Utils $utils) {
 
-        $this->pdo = $this->db->connect();
+        $this->utils = $utils;
+        $this->db = $db;
+        $this->pdo = $this->connect();
+
     }
 
     public function execute (...$args) {
+
         return $this->insert(...$args);
+
     }
 
     public function insert (string $table, array $dados) {
+
         $query = $this->constructQuery($table, $dados);
 
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(array_values($dados));
+
     }
 
     private function constructQuery ($table, $dados):string {
+
         $this->utils->arrayToString($dados, ", ");
 
         $placeholders = str_repeat("?,", count($dados) - 1) . "?";
         $query = "INSERT INTO $table (". implode(", ", array_keys($dados)) .") VALUES ($placeholders)";
 
         return $query;
+        
     }
 }

@@ -5,6 +5,7 @@ namespace App;
 class Utils {
     /** Transforma array associativo em uma string */
     public function arrayToString (array $array, string $separador): string {
+
         $str = "";
         $i = 0;
 
@@ -18,5 +19,6 @@ class Utils {
         }
 
         return $str;
+        
     }
 }
