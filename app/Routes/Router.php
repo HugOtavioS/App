@@ -45,11 +45,17 @@ class Router {
             $this->routeError->routeNotFound();
         }
 
-        $this->verifyVerb(self::$routes[$uri]["method"]);
+        if (isset(self::$routes[$uri])) {
 
-        $this->verifyUri($uri);
+            $this->verifyVerb(self::$routes[$uri]["method"]);
+            $this->verifyUri($uri);
+            $this->handleController($uri);
 
-        $this->handleController($uri);
+        } else {
+
+            $this->routeError->routeNotFound();
+
+        }
 
     }
     
