@@ -24,6 +24,7 @@ class Request {
     public function redirect (string $url, int $code = 301):void {
 
         header('Location: '. $url, true, $code);
+        exit();
         
     }
 }
