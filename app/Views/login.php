@@ -2,7 +2,18 @@
 $style = file_get_contents("../public/index.css") ;
 
 if (isset($_GET["error"])) {
-    $error = "Algum campo não preenchido | Usuário não encontrado";
+
+    switch ($_GET["error"]) {
+        case 0:
+            $error = "Usuário não encontrado";
+            break;
+        case 1:
+            $error = "Coloque seu Email";
+            break;
+        case 2:
+            $error = "Coloque sua Senha";
+        default:
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -22,7 +33,7 @@ if (isset($_GET["error"])) {
         <div class="text-center">
             <h1 class="text-4xl font-bold text-gray-800">Bem-vindo ao nosso site!</h1>
             <h2 class="text-gray-800"><?php echo $this->title ?></h2>
-            <form action="createlogin" method="post" class="mt-8 space-y-6">
+            <form action="login/create" method="post" class="mt-8 space-y-6">
                 <fieldset class="border-0">
 
                     <legend class="text-2xl font-semibold text-gray-800 mb-6 text-center">Faça seu Login</legend>
