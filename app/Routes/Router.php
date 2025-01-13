@@ -3,6 +3,7 @@ namespace App\Routes;
 
 use App\Request;
 use App\Routes\RouteError;
+use App\Session;
 
 /** 
  * Classe responsável por gerenciar as rotas da aplicação.
@@ -13,11 +14,13 @@ class Router {
     public static $routes = [];
     public Request $request;
     public RouteError $routeError;
+    public Session $session;
 
     public function __construct(Request $request, RouteError $routeError) {
 
         $this->request = $request;
         $this->routeError = $routeError;
+        $this->session = new Session();
 
     }
 
@@ -29,6 +32,15 @@ class Router {
             'method' => $method
         ];
 
+    }
+
+    public static function addProtectedRoute (string $route, string $method, string $controller, string $action) {
+        self::$routes[self::handleRoute($route)] = [
+            'controller' => $controller,
+            'action' => $action,
+            'method' => $method,
+            "protected" => true
+        ];
     }
 
     public static function getRoutes ():array {
@@ -78,6 +90,14 @@ class Router {
 
         if (!array_key_exists($uri, self::$routes)) {
             $this->routeError->routeNotFound();
+        }
+
+        $this->session->init();
+
+        if (array_key_exists("protected", self::$routes[$uri])) {
+            if (!$this->session->get("session_login")) {
+                $this->routeError->routeNotFound();
+            }
         }
 
         $this->verifyVerb($uri);
