@@ -9,9 +9,13 @@ class Request {
         
     }
 
-    public function getUri ():string {
+    public function getUri (string $separator = null):string {
 
-        return $_SERVER['REQUEST_URI'];
+        if ($separator == null) {
+            return $_SERVER['REQUEST_URI'];
+        }
+
+        return explode("$separator", $_SERVER["REQUEST_URI"])[0];
 
     }
 

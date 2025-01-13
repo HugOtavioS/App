@@ -23,7 +23,7 @@ class Router {
 
     public static function addRoute (string $route, string $method, string $controller, string $action):void {
 
-        self::$routes[$route] = [
+        self::$routes[self::handleRoute($route)] = [
             'controller' => $controller,
             'action' => $action,
             'method' => $method
@@ -39,24 +39,19 @@ class Router {
 
     public function registerRoutes ():void {
 
-        $uri = $this->request->getUri();
+        $uri = $this->request->getUri("=");
 
         if (empty(self::$routes)) {
             $this->routeError->routeNotFound();
         }
 
-        if (isset(self::$routes[$uri])) {
+        $this->verifyUri($uri);
+        $this->handleController($uri);
 
-            $this->verifyVerb(self::$routes[$uri]["method"]);
-            $this->verifyUri($uri);
-            $this->handleController($uri);
+    }
 
-        } else {
-
-            $this->routeError->routeNotFound();
-
-        }
-
+    private static function handleRoute (string $route) {
+        return explode("=", $route)[0];
     }
     
     /** Lida com a criação do objeto e ação do controller */
@@ -71,9 +66,9 @@ class Router {
 
     }
 
-    private function verifyVerb (string $method):void {
+    private function verifyVerb (string $uri):void {
 
-        if ($this->request->getMethod() != $method) {
+        if ($this->request->getMethod() != self::$routes[$uri]["method"]) {
             $this->routeError->verbNotAllowed();
         }
         
@@ -81,11 +76,11 @@ class Router {
 
     private function verifyUri (string $uri):void {
 
-        $uri = explode("?", $uri)[0];
-
         if (!array_key_exists($uri, self::$routes)) {
             $this->routeError->routeNotFound();
         }
+
+        $this->verifyVerb($uri);
 
     }
 

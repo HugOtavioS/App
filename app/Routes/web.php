@@ -6,4 +6,4 @@ use App\Controllers\LoginController;
 Router::addRoute("/", "GET", HomeController::class, "index");
 Router::addRoute("/login", "GET", LoginController::class, "index");
 Router::addRoute("/login?error", "GET", LoginController::class, "index");
-Router::addRoute("/createlogin", "POST", LoginController::class, "create");
+Router::addRoute("/login/create", "POST", LoginController::class, "create");

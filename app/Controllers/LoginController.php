@@ -35,14 +35,14 @@ class LoginController {
         if (count($this->db->select(["*"],"users", ["email" => $email, "senha" => $senha], "AND")) > 0) {
 
             if (!$this->session->get("session_login")) {
-                $this->session->set("sesseion_login", "$email");
+                $this->session->set("session_login", "$email");
             }
 
             echo "Usuário Encontrado!";
 
         } else {
 
-            $this->request->redirect("http:\\login?error");
+            $this->request->redirect("http:\\login?error=0");
 
         }
 
