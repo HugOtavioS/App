@@ -1,4 +1,7 @@
 <?php
+use App\Session;
+use App\Request;
+
 $style = file_get_contents("../public/index.css") ;
 
 if (isset($_GET["error"])) {
@@ -15,6 +18,10 @@ if (isset($_GET["error"])) {
         default:
     }
 }
+
+if (Session::get("session_login")) {
+    Request::redirect("/");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +35,7 @@ if (isset($_GET["error"])) {
     </style>
 </head>
 <body>
-    <?php require "Components/headerInit.php" ?>
+    <?php require "Components/headerInit.php"; print_r($_SESSION); ?>
     <!-- Start Generation Here -->
     <div class="flex items-center justify-center min-h-screen bg-gray-100">
         <div class="text-center">

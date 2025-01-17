@@ -12,9 +12,7 @@ class Session {
 
     public static function set($key, $value) {
 
-        if (session_status() == PHP_SESSION_NONE) {
-            $_SESSION[$key] = $value;
-        }
+        $_SESSION[$key] = $value;
 
     }
 
