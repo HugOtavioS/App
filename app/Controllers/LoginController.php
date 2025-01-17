@@ -18,7 +18,6 @@ class LoginController {
         $this->view = new ViewController();
         $this->db = new database(new env);
         $this->request = new Request();
-        $this->session = new Session();
 
     }
     public function index() {
@@ -31,14 +30,14 @@ class LoginController {
 
         $email = $_POST["email"];
         $senha = $_POST["senha"];
-        $this->session->init();
+        Session::init();
         if (count($this->db->select(["*"],"users", ["email" => $email, "senha" => $senha], "AND")) > 0) {
 
-            if (!$this->session->get("session_login")) {
-                $this->session->set("session_login", "$email");
+            if (!Session::get("session_login")) {
+                Session::set("session_login", "$email");
             }
 
-            echo "Usuário Encontrado!";
+            Request::redirect("/");
 
         } else {
 
@@ -46,5 +45,11 @@ class LoginController {
 
         }
 
+    }
+
+    public function logout () {
+        Session::delete("session_login");
+        Session::destroy();
+        $this->request->redirect("/");
     }
 }
