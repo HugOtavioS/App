@@ -24,9 +24,9 @@ class Select extends database implements SelectableInterface, DatabaseOperationI
 
     }
 
-    public function select (array $cols, string $table, array $cond, string $operation) {
+    public function select (array $cols, string $table, string $cond) {
 
-        $query = $this->constructQuery($cols, $table, $cond, $operation);
+        $query = $this->constructQuery($cols, $table, $cond);
         
         $stmt = $this->pdo->prepare($query);
         $stmt->execute();
@@ -35,26 +35,13 @@ class Select extends database implements SelectableInterface, DatabaseOperationI
         
     }
 
-    private function constructQuery ($cols, $table, $cond, $operation):string {
+    private function constructQuery ($cols, $table, $cond):string {
 
         $cols = implode(", ", $cols);
 
-        $query = "SELECT $cols FROM $table WHERE ";
-        $query .= $this->formatWhereConditions($cond, $operation).";";
+        $query = "SELECT $cols FROM $table WHERE $cond";
 
         return $query;
 
-    }
-
-    private function formatWhereConditions (array $cond, string $op) {
-
-        $i = [];
-
-        foreach ($cond as $key => $value) {
-            $i[$key] = "'$value'";
-        }
-        
-        return $this->utils->arrayToString($i, $op);
-        
     }
 }

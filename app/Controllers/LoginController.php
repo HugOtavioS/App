@@ -31,7 +31,7 @@ class LoginController {
         $email = $_POST["email"];
         $senha = $_POST["senha"];
         Session::init();
-        if (count($this->db->select(["*"],"users", ["email" => $email, "senha" => $senha], "AND")) > 0) {
+        if (count($this->db->select(["*"],"users", "email = '$email' and senha = $senha")) > 0) {
 
             if (!Session::get("session_login")) {
                 Session::set("session_login", "$email");
