@@ -21,4 +21,22 @@ class Utils {
         return $str;
         
     }
+
+    public function array_value_exists (array $arr, string $value, string $key):bool {
+
+        $i = [];
+
+        foreach ($arr as $ch => $valor) {
+            if ($ch == $key and $valor == $value) {
+                $i[] = $arr;
+            }
+        }
+
+        if (count($i) <= 0) {
+            return false;
+        }
+        
+        return true;
+        
+    }
 }
