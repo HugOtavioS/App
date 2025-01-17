@@ -13,6 +13,7 @@ $style = file_get_contents("../public/index.css") ;
     </style>
 </head>
 <body>
+    <?php require "Components/headerInit.php" ?>
     <!-- Start Generation Here -->
     <div class="flex items-center justify-center min-h-screen bg-gray-100">
         <div class="text-center">
