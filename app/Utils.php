@@ -28,4 +28,28 @@ class Utils {
         return true;
         
     }
+
+    public function verifyController ($controller, $exception):mixed {
+
+        if (!class_exists($controller)) {
+
+            $exception->controllerNotFound();
+
+        }
+
+        return $controller;
+
+    }
+
+    public function verifyAction ($controllerInstance, $action, $exception): mixed {
+
+        if (!method_exists($controllerInstance, $action)) {
+
+            $exception->actionNotFound();
+            
+        }
+
+        return $action;
+        
+    }
 }

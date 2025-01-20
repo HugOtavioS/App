@@ -1,9 +1,7 @@
 <?php
 namespace App\Routes;
 
-use App\Request;
 use App\Routes\RouteError;
-use App\Session;
 use App\Utils;
 
 /**
@@ -13,151 +11,169 @@ class Router {
     public static $routes = [];
     public RouteError $routeError;
     public Utils $utils;
+    private static AddRoute $addRoute;
+    private static GetRoutes $getRoutes;
+    private static HandleRoute $handleRoute;
+    private VerifyUri $verifyUri;
+    private VerifyProtectedRoute $verifyProtectedRoute;
+    private VerifyVerb $verifyVerb;
+    private RegisterRoutes $registerRoutes;
 
-    public function __construct(RouteError $routeError, Utils $utils) {
+    public function __construct(
+        RouteError $routeError,
+        Utils $utils,
+        AddRoute $addRoute,
+        GetRoutes $getRoutes,
+        HandleRoute $handleRoute,
+        VerifyUri $verifyUri,
+        VerifyProtectedRoute $protectedRoute,
+        VerifyVerb $verifyVerb,
+        RegisterRoutes $registerRoutes
+    ) {
 
         $this->routeError = $routeError;
         $this->utils = $utils;
+        self::$addRoute = $addRoute;
+        self::$getRoutes = $getRoutes;
+        self::$handleRoute = $handleRoute;
+        $this->verifyUri = $verifyUri;
+        $this->verifyProtectedRoute = $protectedRoute;
+        $this->verifyVerb = $verifyVerb;
+        $this->registerRoutes = $registerRoutes;
 
     }
 
     public static function addRoute (string $route, string $method, string $controller, string $action):void {
 
-        self::$routes[] = [
-            'route' => self::handleRoute($route),
-            'controller' => $controller,
-            'action' => $action,
-            'method' => $method
-        ];
+        self::$routes[] = self::$addRoute->addRoute($route, $method, $controller, $action);
+
+        // self::$routes[] = [
+        //     'route' => self::handleRoute($route),
+        //     'controller' => $controller,
+        //     'action' => $action,
+        //     'method' => $method
+        // ];
 
     }
 
     public static function addProtectedRoute (string $route, string $method, string $controller, string $action):void {
-        self::$routes[] = [
-            'route' => self::handleRoute($route),
-            'controller' => $controller,
-            'action' => $action,
-            'method' => $method,
-            "protected" => true
-        ];
+
+        self::$routes[] = self::$addRoute->addProtectedRoute($route, $method, $controller, $action);
+
+        // self::$routes[] = [
+        //     'route' => self::handleRoute($route),
+        //     'controller' => $controller,
+        //     'action' => $action,
+        //     'method' => $method,
+        //     "protected" => true
+        // ];
     }
 
     public static function getRoutes ():array {
 
-        return self::$routes;
+        return self::$getRoutes->getRoutes(self::$routes);
 
     }
 
     // Trata e garante que a rota seja valida
     public function registerRoutes ():void {
 
-        $uri = Request::getUri("=");
+        $this->registerRoutes->registerRoutes(self::$routes);
+
+        // $uri = Request::getUri("=");
         
-        if (empty(self::$routes)) {
-            $this->routeError->routeNotFound();
-        }
+        // if (empty(self::$routes)) {
+        //     $this->routeError->routeNotFound();
+        // }
 
-        $routes = $this->verifyUri($uri);
+        // $routes = $this->verifyUri($uri);
 
-        $route = $this->verifyVerb($routes);
+        // $route = $this->verifyVerb($routes);
 
-        $this->verifyProtectedRoute($uri, $route);
+        // $this->verifyProtectedRoute($route);
 
-        $this->handleController($route);
+        // $this->handleController($route);
 
     }
 
     // Separa a URI dos parâmetros
     public static function handleRoute (string $route):string {
 
-        return explode("=", $route)[0];
+        return self::$handleRoute->handleRoute($route);
+
+        // return explode("=", $route)[0];
         
     }
     
     // Lida e trata do controller correspondente a rota solicitada
     protected function handleController (array $route):void {
 
-        $controller = $this->verifyController($route["controller"]);
+        $this->handleRoute->handleController($route);
 
-        $controllerInstance = new $controller();
-        $action = $this->verifyAction($controllerInstance, $route["action"]);
+        // $controller = $this->utils->verifyController($route["controller"], $this->routeError);
+
+        // $controllerInstance = new $controller();
+        // $action = $this->utils->verifyAction($controllerInstance, $route["action"], $this->routeError);
         
-        $controllerInstance->$action();
+        // $controllerInstance->$action();
 
     }
 
     // Verifica se o verbo HTTP está permitido para a URL
     protected function verifyVerb (array $routes) {
 
-        foreach ($routes as $route) {
+        $this->verifyVerb->verifyVerb($routes);
 
-            if (Request::getVerb() == $route["method"]) {
-                return $route;
-            }
+        // foreach ($routes as $route) {
 
-            $this->routeError->verbNotAllowed();
+        //     if (Request::getVerb() == $route["method"]) {
+        //         return $route;
+        //     }
 
-        }
+        //     $this->routeError->verbNotAllowed();
+
+        // }
 
     }
 
     // Verifica se a rota existe
     protected function verifyUri (string $uri):array {
 
-        $routes = [];
+        return $this->verifyUri->verifyUri($uri, self::$routes);
 
-        foreach (self::$routes as $value) {
+        // $routes = [];
 
-            if ($this->utils->array_value_exists($value, $uri, "route")) {
-                $routes[] = $value;
-            }
+        // foreach (self::$routes as $value) {
 
-        }
+        //     if ($this->utils->array_value_exists($value, $uri, "route")) {
+        //         $routes[] = $value;
+        //     }
 
-        if (count($routes) <= 0) {
+        // }
 
-            $this->routeError->routeNotFound();
+        // if (count($routes) <= 0) {
 
-        }
+        //     $this->routeError->routeNotFound();
 
-        return $routes;
+        // }
+
+        // return $routes;
 
     }
 
     // Verifica se a rota é protegida
-    protected function verifyProtectedRoute (string $uri, array $route):void {
+    protected function verifyProtectedRoute (array $route):void {
 
-        Session::init();
+        $this->verifyProtectedRoute->verifyProtectedRoute($route);
 
-        if (array_key_exists("protected", $route) and !Session::get("session_login")) {
+        // Session::init();
 
-            $this->routeError->routeNotFound();
+        // if (array_key_exists("protected", $route) and !Session::get("session_login")) {
 
-        }
+        //     $this->routeError->routeNotFound();
 
-    }
-
-    protected function verifyController ($controller):mixed {
-
-        if (!class_exists($controller)) {
-
-            $this->routeError->controllerNotFound();
-
-        }
-
-        return $controller;
+        // }
 
     }
 
-    protected function verifyAction ($controllerInstance, $action): mixed {
-
-        if (!method_exists($controllerInstance, $action)) {
-
-            $this->routeError->actionNotFound();
-            
-        }
-
-        return $action;
-        
-    }
 }

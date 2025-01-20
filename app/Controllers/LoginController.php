@@ -51,9 +51,11 @@ class LoginController {
     }
 
     public function logout () {
+
         Session::init();
         Session::delete("session_login");
         Session::destroy();
         Request::redirect("/");
+        
     }
 }
