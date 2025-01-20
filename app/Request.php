@@ -2,24 +2,26 @@
 namespace App;
 
 /**
- *  Classe para manipular requisições
+ *  Classe lida com requisições HTTP
  */
 class Request {
     public function __construct () {
         
     }
 
-    public function getUri (string $separator = null):string {
+    public static function getUri (string $separator = "false"):string {
 
-        if ($separator == null) {
+        if (!$separator) {
+
             return $_SERVER['REQUEST_URI'];
+            
         }
 
-        return explode("$separator", $_SERVER["REQUEST_URI"])[0];
+        return explode($separator, $_SERVER["REQUEST_URI"])[0];
 
     }
 
-    public function getMethod ():string {
+    public static function getVerb ():string {
 
         return $_SERVER['REQUEST_METHOD'];
 
@@ -27,7 +29,7 @@ class Request {
 
     public static function redirect (string $url, int $code = 301):void {
 
-        header('Location: '. $url, true, $code);
+        header("Location: {$url}", true, $code);
         exit();
         
     }

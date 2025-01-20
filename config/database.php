@@ -6,7 +6,10 @@ use PDOException;
 use Config\env;
 use Config\Database\Interfaces\DatabaseOperationInterface;
 
-/** Manipular e Lidar com o banco de dados */
+/** 
+ * A classe registra e executa diversas operações definidas,
+ * bem como a conexão com o banco de dados
+ */
 class database {
     private static $env;
     private $pdo;
@@ -26,14 +29,18 @@ class database {
         $password = self::$env['DB_PASS'];
 
         try {
+
             $this->pdo = new PDO($dsn, $username, $password);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             return $this->pdo;
+
         } catch (PDOException $e) {
+
             echo 'Connection failed: ' . $e->getMessage();
             
             return null;
+
         }
 
     }

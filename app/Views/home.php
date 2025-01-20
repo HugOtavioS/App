@@ -2,6 +2,8 @@
 use App\Session;
 use App\Request;
 
+Session::init();
+
 $style = file_get_contents("../public/index.css") ;
 ?>
 <!DOCTYPE html>

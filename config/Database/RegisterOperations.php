@@ -4,6 +4,8 @@ use App\Utils;
 use Config\env;
 use Config\Database\Operations\Select;
 use Config\Database\Operations\Insert;
+
 new database(new env());
-database::registerOperation("select", new Select(new Utils));
-database::registerOperation("insert", new Insert(new Utils));
+
+database::registerOperation("select", new Select());
+database::registerOperation("insert", new Insert());
