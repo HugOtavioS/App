@@ -1,14 +1,15 @@
 <?php
 namespace App\Routes;
 
+use App\Interfaces\InterfaceRouteError;
 use App\Interfaces\verifyVerbInterface;
 use App\Request;
 
 class VerifyVerb implements verifyVerbInterface {
 
-    private RouteError $routeError;
+    private InterfaceRouteError $routeError;
 
-    public function __construct(RouteError $routeError) {
+    public function __construct(InterfaceRouteError $routeError) {
         $this->routeError = $routeError;
     }
 

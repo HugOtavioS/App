@@ -1,14 +1,15 @@
 <?php
 namespace App\Routes;
 
+use App\Interfaces\InterfaceRouteError;
 use App\Interfaces\verifyProtectedRouteInterface;
 use App\Session;
 
 class VerifyProtectedRoute implements verifyProtectedRouteInterface {
 
-    private RouteError $routeError;
+    private InterfaceRouteError $routeError;
 
-    public function __construct (RouteError $routeError) {
+    public function __construct (InterfaceRouteError $routeError) {
         $this->routeError = $routeError;
     }
 

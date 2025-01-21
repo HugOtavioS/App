@@ -1,15 +1,16 @@
 <?php
 namespace App\Routes;
 
+use App\Interfaces\InterfaceRouteError;
 use App\Interfaces\verifyUriInterface;
 use App\Utils;
 
 class VerifyUri implements verifyUriInterface {
 
     private Utils $utils;
-    private RouteError $routeError;
+    private InterfaceRouteError $routeError;
 
-    public function __construct (Utils $utils, RouteError $routeError) {
+    public function __construct (Utils $utils, InterfaceRouteError $routeError) {
         $this->utils = $utils;
         $this->routeError = $routeError;
     }

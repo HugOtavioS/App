@@ -1,10 +1,10 @@
 <?php
 namespace App\Routes;
 
+use App\Interfaces\InterfaceRouteError;
 use App\Interfaces\RegisterRoutesInterface;
 use App\Request;
 use App\Routes\HandleController;
-use App\Routes\RouteError;
 
 class RegisterRoutes implements RegisterRoutesInterface {
 
@@ -12,10 +12,10 @@ class RegisterRoutes implements RegisterRoutesInterface {
     private VerifyUri $verifyUri;
     private VerifyProtectedRoute $verifyProtectedRoute;
     private VerifyVerb $verifyVerb;
-    private RouteError $routeError;
+    private InterfaceRouteError $routeError;
 
     public function __construct (
-        RouteError $routeError,
+        InterfaceRouteError $routeError,
         VerifyUri $verifyUri,
         VerifyProtectedRoute $protectedRoute,
         VerifyVerb $verifyVerb,

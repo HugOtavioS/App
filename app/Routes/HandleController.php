@@ -2,15 +2,15 @@
 namespace App\Routes;
 
 use App\Interfaces\handleControllerInterface;
+use App\Interfaces\InterfaceRouteError;
 use App\Utils;
-use App\Routes\RouteError;
 
 class handleController implements handleControllerInterface {
 
     private Utils $utils;
-    private RouteError $routeError;
+    private InterfaceRouteError $routeError;
 
-    public function __construct(Utils $utils, RouteError $routeError) {
+    public function __construct(Utils $utils, InterfaceRouteError $routeError) {
         $this->utils = $utils;
         $this->routeError = $routeError;
     }

@@ -1,7 +1,7 @@
 <?php
 namespace App\Routes;
 
-use App\Routes\RouteError;
+use App\Interfaces\InterfaceRouteError;
 use App\Utils;
 
 /**
@@ -9,7 +9,7 @@ use App\Utils;
  */
 class Router {
     public static $routes = [];
-    public RouteError $routeError;
+    public InterfaceRouteError $routeError;
     public static Utils $utils;
     private static AddRoute $addRoute;
     private static GetRoutes $getRoutes;
@@ -20,7 +20,7 @@ class Router {
     private RegisterRoutes $registerRoutes;
 
     public function __construct(
-        RouteError $routeError,
+        InterfaceRouteError $routeError,
         Utils $utils,
         AddRoute $addRoute,
         GetRoutes $getRoutes,
