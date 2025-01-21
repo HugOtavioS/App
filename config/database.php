@@ -1,6 +1,7 @@
 <?php
 namespace Config;
 
+use Config\Database\Interfaces\DatabaseErrorInterface;
 use PDO;
 use PDOException;
 use Config\env;
@@ -13,12 +14,14 @@ use Config\Database\Interfaces\DatabaseOperationInterface;
 class database {
     private static $env;
     private $pdo;
+    private static DatabaseErrorInterface $databaseError;
     private static array $operations = [];
 
-    public function __construct(env $env) {
+    public function __construct(env $env, DatabaseErrorInterface $databaseError) {
 
         self::$env = $env;
         self::$env = self::$env->getenvDB();
+        self::$databaseError = $databaseError;
 
     }
 
@@ -37,7 +40,7 @@ class database {
 
         } catch (PDOException $e) {
 
-            echo 'Connection failed: ' . $e->getMessage();
+            self::$databaseError->error('Connection failed: ' . $e->getMessage());
             
             return null;
 

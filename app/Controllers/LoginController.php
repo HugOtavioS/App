@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use App\Controllers\ViewController;
+use Config\Database\DatabaseError;
 use Config\database;
 use Config\env;
 use App\Request;
@@ -14,7 +15,7 @@ class LoginController {
     public function __construct () {
 
         $this->view = new ViewController();
-        $this->db = new database(new env);
+        $this->db = new database(new env, new DatabaseError);
 
     }
     
