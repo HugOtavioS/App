@@ -1,7 +1,6 @@
 <?php
 namespace App\Interfaces;
 
-interface handleRouteInterface {
-    public function handleRoute (string $route):string;
+interface handleControllerInterface {
     public function handleController (array $route):void;
 }

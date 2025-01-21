@@ -29,6 +29,12 @@ class Utils {
         
     }
 
+    public function separator (string $value, int $key):string {
+
+        return explode("=", $value)[$key];
+        
+    }
+
     public function verifyController ($controller, $exception):mixed {
 
         if (!class_exists($controller)) {

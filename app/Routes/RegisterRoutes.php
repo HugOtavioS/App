@@ -3,12 +3,12 @@ namespace App\Routes;
 
 use App\Interfaces\RegisterRoutesInterface;
 use App\Request;
-use App\Routes\HandleRoute;
+use App\Routes\HandleController;
 use App\Routes\RouteError;
 
 class RegisterRoutes implements RegisterRoutesInterface {
 
-    private handleRoute $handleRoute;
+    private HandleController $handleController;
     private VerifyUri $verifyUri;
     private VerifyProtectedRoute $verifyProtectedRoute;
     private VerifyVerb $verifyVerb;
@@ -19,9 +19,9 @@ class RegisterRoutes implements RegisterRoutesInterface {
         VerifyUri $verifyUri,
         VerifyProtectedRoute $protectedRoute,
         VerifyVerb $verifyVerb,
-        HandleRoute $handleRoute
+        HandleController $handleController
         ) {
-        $this->handleRoute = $handleRoute;
+        $this->handleController = $handleController;
         $this->routeError = $routeError;
         $this->verifyUri = $verifyUri;
         $this->verifyProtectedRoute = $protectedRoute;
@@ -42,7 +42,7 @@ class RegisterRoutes implements RegisterRoutesInterface {
 
         $this->verifyProtectedRoute->verifyProtectedRoute($route);
 
-        $this->handleRoute->handleController($route);
+        $this->handleController->handleController($route);
     }
 
 }

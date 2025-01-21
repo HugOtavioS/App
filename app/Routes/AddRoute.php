@@ -2,19 +2,20 @@
 namespace App\Routes;
 
 use App\Interfaces\addRouteInterface;
+use App\Utils;
 
 class AddRoute implements addRouteInterface {
 
-    private handleRoute $handleRoute;
+    private Utils $utils;
 
-    public function __construct (HandleRoute $handleRoute) {
-        $this->handleRoute = $handleRoute;
+    public function __construct (Utils $utils) {
+        $this->utils = $utils;
     }
 
     public function addRoute (string $route, string $method, string $controller, string $action):array {
 
         return [
-            'route' => $this->handleRoute->handleRoute($route),
+            'route' => $this->utils->separator($route, 0),
             'controller' => $controller,
             'action' => $action,
             'method' => $method
@@ -24,7 +25,7 @@ class AddRoute implements addRouteInterface {
 
     public function addProtectedRoute (string $route, string $method, string $controller, string $action):array {
         return [
-            'route' => $this->handleRoute->handleRoute($route),
+            'route' => $this->utils->separator($route, 0),
             'controller' => $controller,
             'action' => $action,
             'method' => $method,

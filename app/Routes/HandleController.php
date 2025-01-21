@@ -1,11 +1,11 @@
 <?php
 namespace App\Routes;
 
-use App\Interfaces\handleRouteInterface;
+use App\Interfaces\handleControllerInterface;
 use App\Utils;
 use App\Routes\RouteError;
 
-class handleRoute implements handleRouteInterface {
+class handleController implements handleControllerInterface {
 
     private Utils $utils;
     private RouteError $routeError;
@@ -13,10 +13,6 @@ class handleRoute implements handleRouteInterface {
     public function __construct(Utils $utils, RouteError $routeError) {
         $this->utils = $utils;
         $this->routeError = $routeError;
-    }
-
-    public function handleRoute (string $route):string {
-        return explode("=", $route)[0];
     }
 
     public function handleController (array $route):void {
