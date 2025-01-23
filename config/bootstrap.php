@@ -4,6 +4,11 @@ use App\Routes\Router;
 use App\Routes\RouteError;
 use App\Utils;
 
+use App\Request\Request;
+use App\Request\GetUri;
+use App\Request\GetVerb;
+use App\Request\Redirect;
+
 use App\Routes\AddRoute;
 use App\Routes\GetRoutes;
 use App\Routes\HandleController;
@@ -11,6 +16,8 @@ use App\Routes\VerifyUri;
 use App\Routes\VerifyProtectedRoute;
 use App\Routes\VerifyVerb;
 use App\Routes\RegisterRoutes;
+
+$rq = new Request(new GetUri(), new GetVerb(), new Redirect());
 
 $router = new Router(
     new RouteError(new ViewController),

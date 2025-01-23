@@ -3,7 +3,7 @@ namespace App\Routes;
 
 use App\Interfaces\InterfaceRouteError;
 use App\Interfaces\RegisterRoutesInterface;
-use App\Request;
+use App\Request\Request;
 use App\Routes\HandleController;
 
 class RegisterRoutes implements RegisterRoutesInterface {
@@ -45,7 +45,7 @@ class RegisterRoutes implements RegisterRoutesInterface {
         $this->verifyProtectedRoute->verifyProtectedRoute($route);
 
         $this->handleController->handleController($route);
-        
+
     }
 
 }

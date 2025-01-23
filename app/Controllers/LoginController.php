@@ -5,7 +5,7 @@ use App\Controllers\ViewController;
 use Config\Database\DatabaseError;
 use Config\database;
 use Config\env;
-use App\Request;
+use App\Request\Request;
 use App\Session;
 
 class LoginController {

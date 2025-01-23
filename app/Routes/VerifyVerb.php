@@ -3,7 +3,7 @@ namespace App\Routes;
 
 use App\Interfaces\InterfaceRouteError;
 use App\Interfaces\verifyVerbInterface;
-use App\Request;
+use App\Request\Request;
 
 class VerifyVerb implements verifyVerbInterface {
 
