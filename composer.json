@@ -4,7 +4,8 @@
         "App\\": "app/",
         "Routes\\": "app/routes/",
         "Config\\": "config/",
-        "Public\\": "public/"
+        "Public\\": "public/",
+        "Tests\\": "tests/"
       }
     }
   }

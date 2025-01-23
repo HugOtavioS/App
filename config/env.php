@@ -2,6 +2,7 @@
 namespace Config;
 
 class env {
+    
     private $env;
     public function __construct() {
         $this->env = "../.env";
@@ -29,4 +30,5 @@ class env {
 
         return $arr;
     }
+
 }

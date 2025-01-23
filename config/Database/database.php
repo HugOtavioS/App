@@ -1,21 +1,28 @@
 <?php
-namespace Config;
+namespace Config\Database;
 
+use Config\Database\Interfaces\DatabaseErrorInterface;
 use PDO;
 use PDOException;
 use Config\env;
 use Config\Database\Interfaces\DatabaseOperationInterface;
 
-/** Manipular e Lidar com o banco de dados */
+/** 
+ * A classe registra e executa diversas operações definidas,
+ * bem como a conexão com o banco de dados
+ */
 class database {
+
     private static $env;
     private $pdo;
+    private static DatabaseErrorInterface $databaseError;
     private static array $operations = [];
 
-    public function __construct(env $env) {
+    public function __construct(env $env, DatabaseErrorInterface $databaseError) {
 
         self::$env = $env;
         self::$env = self::$env->getenvDB();
+        self::$databaseError = $databaseError;
 
     }
 
@@ -26,14 +33,18 @@ class database {
         $password = self::$env['DB_PASS'];
 
         try {
+
             $this->pdo = new PDO($dsn, $username, $password);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             return $this->pdo;
+
         } catch (PDOException $e) {
-            echo 'Connection failed: ' . $e->getMessage();
+
+            self::$databaseError->error('Connection failed: ' . $e->getMessage());
             
             return null;
+
         }
 
     }
@@ -55,4 +66,5 @@ class database {
         throw new \BadMethodCallException("Operação '$name' não encontrada.");
 
     }
+    
 }

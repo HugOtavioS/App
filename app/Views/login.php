@@ -1,6 +1,8 @@
 <?php
 use App\Session;
-use App\Request;
+use App\Request\Request;
+
+Session::init();
 
 $style = file_get_contents("../public/index.css") ;
 
@@ -35,7 +37,7 @@ if (Session::get("session_login")) {
     </style>
 </head>
 <body>
-    <?php require "Components/headerInit.php"; print_r($_SESSION); ?>
+    <?php require "Components/headerInit.php" ?>
     <!-- Start Generation Here -->
     <div class="flex items-center justify-center min-h-screen bg-gray-100">
         <div class="text-center">

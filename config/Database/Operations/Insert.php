@@ -3,17 +3,15 @@ namespace Config\Database\Operations;
 
 use Config\Database\Interfaces\InsertableInterface;
 use Config\Database\Interfaces\DatabaseOperationInterface;
-use Config\database;
+use Config\Database\database;
 use PDO;
-use App\Utils;
 
 class Insert extends database implements InsertableInterface, DatabaseOperationInterface {
+    
     private PDO $pdo;
-    private $utils;
 
-    public function __construct(Utils $utils) {
+    public function __construct() {
 
-        $this->utils = $utils;
         $this->pdo = $this->connect();
 
     }
@@ -35,12 +33,11 @@ class Insert extends database implements InsertableInterface, DatabaseOperationI
 
     private function constructQuery ($table, $dados):string {
 
-        $this->utils->arrayToString($dados, ", ");
-
         $placeholders = str_repeat("?,", count($dados) - 1) . "?";
         $query = "INSERT INTO $table (". implode(", ", array_keys($dados)) .") VALUES ($placeholders)";
 
         return $query;
         
     }
+
 }
