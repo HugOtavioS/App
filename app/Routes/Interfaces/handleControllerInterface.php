@@ -1,5 +1,5 @@
 <?php
-namespace App\Interfaces;
+namespace App\Routes\Interfaces;
 
 interface handleControllerInterface {
     public function handleController (array $route):void;

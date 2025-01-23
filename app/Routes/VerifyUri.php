@@ -1,8 +1,8 @@
 <?php
 namespace App\Routes;
 
-use App\Interfaces\InterfaceRouteError;
-use App\Interfaces\verifyUriInterface;
+use App\Routes\Interfaces\InterfaceRouteError;
+use App\Routes\Interfaces\verifyUriInterface;
 use App\Utils;
 
 class VerifyUri implements verifyUriInterface {

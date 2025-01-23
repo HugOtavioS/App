@@ -2,7 +2,7 @@
 namespace App\Routes;
 
 use App\Controllers\ViewController;
-use App\Interfaces\InterfaceRouteError;
+use App\Routes\Interfaces\InterfaceRouteError;
 
 class RouteError implements InterfaceRouteError {
 

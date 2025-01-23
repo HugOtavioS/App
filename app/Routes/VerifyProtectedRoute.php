@@ -1,8 +1,8 @@
 <?php
 namespace App\Routes;
 
-use App\Interfaces\InterfaceRouteError;
-use App\Interfaces\verifyProtectedRouteInterface;
+use App\Routes\Interfaces\InterfaceRouteError;
+use App\Routes\Interfaces\verifyProtectedRouteInterface;
 use App\Session;
 
 class VerifyProtectedRoute implements verifyProtectedRouteInterface {

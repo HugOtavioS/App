@@ -1,7 +1,7 @@
 <?php
 namespace App\Routes;
 
-use App\Interfaces\addRouteInterface;
+use App\Routes\Interfaces\addRouteInterface;
 use App\Utils;
 
 class AddRoute implements addRouteInterface {

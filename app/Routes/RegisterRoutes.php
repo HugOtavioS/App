@@ -1,8 +1,8 @@
 <?php
 namespace App\Routes;
 
-use App\Interfaces\InterfaceRouteError;
-use App\Interfaces\RegisterRoutesInterface;
+use App\Routes\Interfaces\InterfaceRouteError;
+use App\Routes\Interfaces\RegisterRoutesInterface;
 use App\Request\Request;
 use App\Routes\HandleController;
 

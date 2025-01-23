@@ -1,8 +1,8 @@
 <?php
 namespace App\Routes;
 
-use App\Interfaces\InterfaceRouteError;
-use App\Interfaces\verifyVerbInterface;
+use App\Routes\Interfaces\InterfaceRouteError;
+use App\Routes\Interfaces\verifyVerbInterface;
 use App\Request\Request;
 
 class VerifyVerb implements verifyVerbInterface {

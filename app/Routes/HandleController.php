@@ -1,8 +1,8 @@
 <?php
 namespace App\Routes;
 
-use App\Interfaces\handleControllerInterface;
-use App\Interfaces\InterfaceRouteError;
+use App\Routes\Interfaces\handleControllerInterface;
+use App\Routes\Interfaces\InterfaceRouteError;
 use App\Utils;
 
 class handleController implements handleControllerInterface {
@@ -23,5 +23,5 @@ class handleController implements handleControllerInterface {
         
         $controllerInstance->$action();
     }
-    
+
 }

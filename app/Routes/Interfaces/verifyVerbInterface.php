@@ -1,5 +1,5 @@
 <?php
-namespace App\Interfaces;
+namespace App\Routes\Interfaces;
 
 interface verifyVerbInterface {
     public function verifyVerb (array $routes);

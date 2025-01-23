@@ -1,7 +1,7 @@
 <?php
 namespace App\Routes;
 
-use App\Interfaces\InterfaceRouteError;
+use App\Routes\Interfaces\InterfaceRouteError;
 use App\Utils;
 
 /**
