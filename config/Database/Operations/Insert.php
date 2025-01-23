@@ -3,7 +3,7 @@ namespace Config\Database\Operations;
 
 use Config\Database\Interfaces\InsertableInterface;
 use Config\Database\Interfaces\DatabaseOperationInterface;
-use Config\database;
+use Config\Database\database;
 use PDO;
 
 class Insert extends database implements InsertableInterface, DatabaseOperationInterface {

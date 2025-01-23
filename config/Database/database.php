@@ -1,5 +1,5 @@
 <?php
-namespace Config;
+namespace Config\Database;
 
 use Config\Database\Interfaces\DatabaseErrorInterface;
 use PDO;

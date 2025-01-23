@@ -1,5 +1,5 @@
 <?php
-use Config\database;
+use Config\Database\database;
 use Config\Database\DatabaseError;
 use Config\env;
 use Config\Database\Operations\Select;

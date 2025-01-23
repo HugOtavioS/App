@@ -3,7 +3,7 @@ namespace Config\Database\Operations;
 
 use Config\Database\Interfaces\SelectableInterface;
 use Config\Database\Interfaces\DatabaseOperationInterface;
-use Config\database;
+use Config\Database\database;
 use Exception;
 use PDO;
 

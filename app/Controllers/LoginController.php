@@ -3,7 +3,7 @@ namespace App\Controllers;
 
 use App\Controllers\ViewController;
 use Config\Database\DatabaseError;
-use Config\database;
+use Config\Database\database;
 use Config\env;
 use App\Request\Request;
 use App\Session;
