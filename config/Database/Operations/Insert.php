@@ -7,6 +7,7 @@ use Config\database;
 use PDO;
 
 class Insert extends database implements InsertableInterface, DatabaseOperationInterface {
+    
     private PDO $pdo;
 
     public function __construct() {
@@ -38,4 +39,5 @@ class Insert extends database implements InsertableInterface, DatabaseOperationI
         return $query;
         
     }
+
 }

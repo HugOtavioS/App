@@ -12,6 +12,7 @@ use Config\Database\Interfaces\DatabaseOperationInterface;
  * bem como a conexão com o banco de dados
  */
 class database {
+
     private static $env;
     private $pdo;
     private static DatabaseErrorInterface $databaseError;
@@ -65,4 +66,5 @@ class database {
         throw new \BadMethodCallException("Operação '$name' não encontrada.");
 
     }
+    
 }

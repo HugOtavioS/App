@@ -8,6 +8,7 @@ use Exception;
 use PDO;
 
 class Select extends database implements SelectableInterface, DatabaseOperationInterface {
+
     private PDO $pdo;
 
     public function __construct() {
@@ -50,4 +51,5 @@ class Select extends database implements SelectableInterface, DatabaseOperationI
         return $query;
 
     }
+    
 }

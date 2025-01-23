@@ -21,11 +21,13 @@ class RegisterRoutes implements RegisterRoutesInterface {
         VerifyVerb $verifyVerb,
         HandleController $handleController
         ) {
+
         $this->handleController = $handleController;
         $this->routeError = $routeError;
         $this->verifyUri = $verifyUri;
         $this->verifyProtectedRoute = $protectedRoute;
         $this->verifyVerb = $verifyVerb;
+
     }
 
     public function registerRoutes ($routes):void {
@@ -43,6 +45,7 @@ class RegisterRoutes implements RegisterRoutesInterface {
         $this->verifyProtectedRoute->verifyProtectedRoute($route);
 
         $this->handleController->handleController($route);
+        
     }
 
 }

@@ -31,4 +31,5 @@ class RouteError implements InterfaceRouteError {
         $this->view->load("404", ["msg" => "Action Not Found"]);
         exit;
     }
+    
 }

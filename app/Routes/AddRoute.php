@@ -24,6 +24,7 @@ class AddRoute implements addRouteInterface {
     }
 
     public function addProtectedRoute (string $route, string $method, string $controller, string $action):array {
+        
         return [
             'route' => $this->utils->separator($route, 0),
             'controller' => $controller,
@@ -31,6 +32,7 @@ class AddRoute implements addRouteInterface {
             'method' => $method,
             "protected" => true
         ];
+        
     }
 
 }
