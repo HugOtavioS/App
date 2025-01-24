@@ -15,6 +15,7 @@ use App\Routes\HandleController;
 use App\Routes\VerifyUri;
 use App\Routes\VerifyProtectedRoute;
 use App\Routes\VerifyVerb;
+use App\Routes\VerifyRoute;
 use App\Routes\RegisterRoutes;
 
 $rq = new Request(new GetUri(), new GetVerb(), new Redirect());
@@ -28,6 +29,7 @@ $router = new Router(
     new VerifyUri(new Utils, new RouteError(new ViewController)),
     new VerifyProtectedRoute(new RouteError(new ViewController)),
     new VerifyVerb(new RouteError(new ViewController)),
+    new VerifyRoute(new Utils),
     new RegisterRoutes(
         new RouteError(new ViewController),
         new VerifyUri(new Utils, new RouteError(new ViewController)),
