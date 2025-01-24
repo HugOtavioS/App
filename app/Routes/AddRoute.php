@@ -15,7 +15,7 @@ class AddRoute implements addRouteInterface {
     public function addRoute (string $route, string $method, string $controller, string $action):array {
 
         return [
-            'route' => $this->utils->separator($route, 0),
+            'route' => $this->utils->separator($route, 0, "="),
             'controller' => $controller,
             'action' => $action,
             'method' => $method
@@ -26,7 +26,7 @@ class AddRoute implements addRouteInterface {
     public function addProtectedRoute (string $route, string $method, string $controller, string $action):array {
         
         return [
-            'route' => $this->utils->separator($route, 0),
+            'route' => $this->utils->separator($route, 0, "="),
             'controller' => $controller,
             'action' => $action,
             'method' => $method,

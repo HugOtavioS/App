@@ -48,7 +48,7 @@ class Router {
 
     public static function addRoute (string $route, string $method, string $controller, string $action):void {
 
-        if (self::$verifyRoute->verifyRoute(self::$routes, self::$utils->separator($route, 0), $method)) return;
+        if (self::$verifyRoute->verifyRoute(self::$routes, self::$utils->separator($route, 0, "="), $method)) return;
 
         self::$routes[] = self::$addRoute->addRoute($route, $method, $controller, $action);
 
@@ -56,7 +56,7 @@ class Router {
 
     public static function addProtectedRoute (string $route, string $method, string $controller, string $action):void {
 
-        if (self::$verifyRoute->verifyRoute(self::$routes, self::$utils->separator($route, 0), $method)) return;
+        if (self::$verifyRoute->verifyRoute(self::$routes, self::$utils->separator($route, 0, "="), $method)) return;
 
         self::$routes[] = self::$addRoute->addProtectedRoute($route, $method, $controller, $action);
 
@@ -79,7 +79,7 @@ class Router {
     // Separa a URI dos parâmetros
     public static function handleRoute (string $route):string {
 
-        return self::$utils->separator($route, 0);
+        return self::$utils->separator($route, 0, "=");
 
     }
     

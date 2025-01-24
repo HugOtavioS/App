@@ -29,9 +29,9 @@ class Utils {
         
     }
 
-    public function separator (string $value, int $key):string {
+    public function separator (string $value, int $key, string $separator):string {
 
-        return explode("=", $value)[$key];
+        return explode($separator, $value)[$key];
         
     }
 
