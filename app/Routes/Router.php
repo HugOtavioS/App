@@ -17,6 +17,7 @@ class Router {
     private VerifyUri $verifyUri;
     private VerifyProtectedRoute $verifyProtectedRoute;
     private VerifyVerb $verifyVerb;
+    private static VerifyRoute $verifyRoute;
     private RegisterRoutes $registerRoutes;
 
     public function __construct(
@@ -28,6 +29,7 @@ class Router {
         VerifyUri $verifyUri,
         VerifyProtectedRoute $protectedRoute,
         VerifyVerb $verifyVerb,
+        VerifyRoute $verifyRoute,
         RegisterRoutes $registerRoutes
     ) {
 
@@ -39,17 +41,22 @@ class Router {
         $this->verifyUri = $verifyUri;
         $this->verifyProtectedRoute = $protectedRoute;
         $this->verifyVerb = $verifyVerb;
+        self::$verifyRoute = $verifyRoute;
         $this->registerRoutes = $registerRoutes;
 
     }
 
     public static function addRoute (string $route, string $method, string $controller, string $action):void {
 
+        if (self::$verifyRoute->verifyRoute(self::$routes, self::$utils->separator($route, 0), $method)) return;
+
         self::$routes[] = self::$addRoute->addRoute($route, $method, $controller, $action);
 
     }
 
     public static function addProtectedRoute (string $route, string $method, string $controller, string $action):void {
+
+        if (self::$verifyRoute->verifyRoute(self::$routes, self::$utils->separator($route, 0), $method)) return;
 
         self::$routes[] = self::$addRoute->addProtectedRoute($route, $method, $controller, $action);
 
@@ -63,7 +70,9 @@ class Router {
 
     // Trata e garante que a rota seja valida
     public function registerRoutes ():void {
-
+        echo "<pre>";
+        print_r(self::$routes);
+        echo "</pre>";
         $this->registerRoutes->registerRoutes(self::$routes);
 
 
