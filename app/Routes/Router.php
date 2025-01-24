@@ -70,9 +70,7 @@ class Router {
 
     // Trata e garante que a rota seja valida
     public function registerRoutes ():void {
-        echo "<pre>";
-        print_r(self::$routes);
-        echo "</pre>";
+        
         $this->registerRoutes->registerRoutes(self::$routes);
 
 
