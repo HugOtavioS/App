@@ -27,7 +27,6 @@ class database {
     }
 
     protected function connect(): PDO|null {
-
         $dsn = 'mysql:dbname=' . self::$env['DB_NAME'] . ';host=' . self::$env['DB_HOST'];
         $username = self::$env['DB_USER'];
         $password = self::$env['DB_PASS'];

@@ -1,6 +1,6 @@
 <?php
-use App\Session;
-use App\Request;
+use Src\Session;
+use Src\Request\Request;
 
 Session::init();
 

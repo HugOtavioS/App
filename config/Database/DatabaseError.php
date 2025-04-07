@@ -2,7 +2,7 @@
 namespace Config\Database;
 
 use Config\Database\Interfaces\DatabaseErrorInterface;
-use App\Controllers\ViewController;
+use Src\Controllers\ViewController;
 
 class DatabaseError implements DatabaseErrorInterface {
     public function error(string $message): void {

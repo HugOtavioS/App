@@ -1,22 +1,22 @@
 <?php
-use App\Controllers\ViewController;
-use App\Routes\Router;
-use App\Routes\RouteError;
-use App\Utils;
+use Src\Controllers\ViewController;
+use Src\Route\Classes\Router;
+use Src\Route\Classes\RouteError;
+use Src\Utils;
 
-use App\Request\Request;
-use App\Request\GetUri;
-use App\Request\GetVerb;
-use App\Request\Redirect;
+use Src\Request\Request;
+use Src\Request\Classes\GetUri;
+use Src\Request\Classes\GetVerb;
+use Src\Request\Classes\Redirect;
 
-use App\Routes\AddRoute;
-use App\Routes\GetRoutes;
-use App\Routes\HandleController;
-use App\Routes\VerifyUri;
-use App\Routes\VerifyProtectedRoute;
-use App\Routes\VerifyVerb;
-use App\Routes\VerifyRoute;
-use App\Routes\RegisterRoutes;
+use Src\Route\Classes\AddRoute;
+use Src\Route\Classes\GetRoutes;
+use Src\Route\Classes\HandleController;
+use Src\Route\Classes\VerifyUri;
+use Src\Route\Classes\VerifyProtectedRoute;
+use Src\Route\Classes\VerifyVerb;
+use Src\Route\Classes\VerifyRoute;
+use Src\Route\Classes\RegisterRoutes;
 
 $rq = new Request(new GetUri(), new GetVerb(), new Redirect());
 
@@ -38,7 +38,7 @@ $router = new Router(
         new HandleController(new Utils, new RouteError(new ViewController))),
 );
 
-require __DIR__ . "/../app/Routes/web.php";
+require __DIR__ . "/../src/Route/web.php";
 require __DIR__ . "/Database/RegisterOperations.php";
 
 $router->registerRoutes();

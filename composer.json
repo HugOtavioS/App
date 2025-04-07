@@ -1,6 +1,7 @@
 {
     "autoload": {
       "psr-4": {
+        "Src\\": "src/",
         "App\\": "app/",
         "Routes\\": "app/routes/",
         "Config\\": "config/",

@@ -21,7 +21,7 @@ class env {
 
         foreach ($env as $key => $value) {
             if(strstr($value, "DB")){
-                $k = explode("=", $value)[0];
+                $k = trim(explode("=", $value)[0]);
                 $v = trim(explode("=", $value)[1]);
 
                 $arr[$k] = $v;
