@@ -15,11 +15,11 @@ class ViewController {
 
     }
 
-    private function createParams (array $params) {
+    private function createParams (array $params):void {
 
         foreach ($params as $key => $value) {
             @$this->$key = $value;
         }
-        
+
     }
 }

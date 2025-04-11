@@ -26,13 +26,17 @@ class Request {
 
     public static function getUri (string $separator = "false"):string {
 
-        return self::$uri->getUri($separator);
+        if (!$separator) {
+            return $_SERVER['REQUEST_URI'];
+        }
+
+        return explode($separator, $_SERVER["REQUEST_URI"])[0];
 
     }
 
     public static function getVerb ():string {
 
-        return self::$verb->getVerb();
+        return $_SERVER['REQUEST_METHOD'];
 
     }
 

@@ -1,114 +1,121 @@
 <?php
 namespace Src\Route\Classes;
 
-use Src\Route\Interfaces\InterfaceRouteError;
-use Src\Utils;
+use Src\Route\Classes\RouteError;
+use Src\Request\Request;
+use Src\Session;
+use Exception;
 
 /**
  * Classe responsável por lidar com as rotas da aplicação
  */
 class Router {
-    public static $routes = [];
-    public InterfaceRouteError $routeError;
-    public static Utils $utils;
-    private static AddRoute $addRoute;
-    private static GetRoutes $getRoutes;
-    private static HandleController $handleController;
-    private VerifyUri $verifyUri;
-    private VerifyProtectedRoute $verifyProtectedRoute;
-    private VerifyVerb $verifyVerb;
-    private static VerifyRoute $verifyRoute;
-    private RegisterRoutes $registerRoutes;
 
-    public function __construct(
-        InterfaceRouteError $routeError,
-        Utils $utils,
-        AddRoute $addRoute,
-        GetRoutes $getRoutes,
-        HandleController $handleController,
-        VerifyUri $verifyUri,
-        VerifyProtectedRoute $protectedRoute,
-        VerifyVerb $verifyVerb,
-        VerifyRoute $verifyRoute,
-        RegisterRoutes $registerRoutes
-    ) {
+    private static $routes = [];
+    private $routeError;
 
-        $this->routeError = $routeError;
-        self::$utils = $utils;
-        self::$addRoute = $addRoute;
-        self::$getRoutes = $getRoutes;
-        self::$handleController = $handleController;
-        $this->verifyUri = $verifyUri;
-        $this->verifyProtectedRoute = $protectedRoute;
-        $this->verifyVerb = $verifyVerb;
-        self::$verifyRoute = $verifyRoute;
-        $this->registerRoutes = $registerRoutes;
-
+    public function __construct () {
+        $this->routeError = new RouteError();
     }
 
-    public static function addRoute (string $route, string $method, string $controller, string $action):void {
-
-        if (self::$verifyRoute->verifyRoute(self::$routes, self::$utils->separator($route, 0, "="), $method)) return;
-
-        self::$routes[] = self::$addRoute->addRoute($route, $method, $controller, $action);
-
-    }
-
-    public static function addProtectedRoute (string $route, string $method, string $controller, string $action):void {
-
-        if (self::$verifyRoute->verifyRoute(self::$routes, self::$utils->separator($route, 0, "="), $method)) return;
-
-        self::$routes[] = self::$addRoute->addProtectedRoute($route, $method, $controller, $action);
-
-    }
-
-    public static function getRoutes ():array {
-
-        return self::$getRoutes->getRoutes(self::$routes);
-
-    }
-
-    // Trata e garante que a rota seja valida
     public function registerRoutes ():void {
-        
-        $this->registerRoutes->registerRoutes(self::$routes);
-
-
+        require __DIR__ . "../../web.php";
+        $this->executeActionController();
     }
 
-    // Separa a URI dos parâmetros
-    public static function handleRoute (string $route):string {
-
-        return self::$utils->separator($route, 0, "=");
-
+    public static function addRoute ($uri, $method, $controller, $action): void {
+        self::$routes[] = [
+            "uri" => $uri,
+            "method" => $method,
+            "controller" => $controller,
+            "action" => $action,
+            "protected" => false,
+        ];
     }
+
+    public static function addProtectedRoute ($uri, $method, $controller, $action): void {
+        self::$routes[] = [
+            "uri" => $uri,
+            "method" => $method,
+            "controller" => $controller,
+            "action" => $action,
+            "protected" => true,
+        ];
+    }
+
+    public function getRoutes (): array {
+        return self::$routes;
+    }
+
+    private function verifyRouteWithUri () {
+        try {
+
+            $result = false;
     
-    // Lida e trata do controller correspondente a rota solicitada
-    protected function handleController (array $route):void {
+            foreach (self::$routes as $route) {
+                if ($route["uri"] === Request::getUri() and 
+                    $route["method"] === Request::getVerb()) {
+                    $result = $route;
+                }
+            }
+    
+            if (!$result) {
+                throw new Exception("Rota não encontrada");
+            }
 
-        $this->handleController->handleController($route);
+            // $this->verifyProtectedRoute();
+
+            return $result;
+            
+        } catch (Exception $e) {
+            $this->routeError->error(["msg" => $e->getMessage()], 404);
+        }
+    }
+
+    private function verifyProtectedRoute ($route):void {
+        try {
+
+            if ($route["protected"] === true) {
+
+                if (!Session::get("user")) {
+                    throw new Exception("Rota protegida, faça login para acessar");
+                }
+
+            }
+
+        } catch (Exception $e) {
+            $this->routeError->error(["msg" => $e->getMessage()], 404);
+        }
 
     }
 
-    // Verifica se o verbo HTTP está permitido para a URL
-    protected function verifyVerb (array $routes) {
+    private function executeActionController ():void {
+        $route = $this->verifyRouteWithUri();
 
-        $this->verifyVerb->verifyVerb($routes);
+        $this->verifyProtectedRoute($route);
+        
+        $controller = new $route["controller"];
+        $action = $route["action"];
 
+        $this->verifyExistsAction($controller, $action);
+
+        $controller->$action();
     }
 
-    // Verifica se a rota existe
-    protected function verifyUri (string $uri):array {
+    private function verifyExistsAction ($controller, $action):void {
+        try {
 
-        return $this->verifyUri->verifyUri($uri, self::$routes);
+            if (!is_object($controller)) {
+                throw new Exception("Controller não encontrado");
+            }
 
-    }
+            if (!method_exists($controller, $action)) {
+                throw new Exception("Ação não encontrada");
+            }
 
-    // Verifica se a rota é protegida
-    protected function verifyProtectedRoute (array $route):void {
-
-        $this->verifyProtectedRoute->verifyProtectedRoute($route);
-
+        } catch (Exception $e) {
+            $this->routeError->error(["msg" => $e->getMessage()], 404);
+        }
     }
 
 }

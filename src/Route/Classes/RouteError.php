@@ -2,33 +2,18 @@
 namespace Src\Route\Classes;
 
 use Src\Controllers\ViewController;
-use Src\Route\Interfaces\InterfaceRouteError;
+// use Src\Route\Interfaces\InterfaceRouteError;
 
-class RouteError implements InterfaceRouteError {
+class RouteError  {
 
     private ViewController $view;
 
-    public function __construct (ViewController $view) {
-        $this->view = $view;
+    public function __construct () {
+        $this->view = new ViewController;
     }
 
-    public function routeNotFound ():void {
-        $this->view->load("404", ["msg" => "Route Not Found"]);
-        exit;
-    }
-
-    public function verbNotAllowed ():void {
-        $this->view->load("404", ["msg" => "Verb Not Allowed"]);
-        exit;
-    }
-
-    public function controllerNotFound ():void {
-        $this->view->load("404", ["msg" => "Controller Not Found"]);
-        exit;
-    }
-
-    public function actionNotFound ():void {
-        $this->view->load("404", ["msg" => "Action Not Found"]);
+    public function error ($mensage = ["msg" => "Service Not Found"], $code = 404):void {
+        $this->view->load($code, $mensage);
         exit;
     }
     
