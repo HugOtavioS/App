@@ -1,5 +1,5 @@
 <?php
-use Src\Route\Classes\Router;
+use Src\Route\Router;
 
 $router = new Router();
 $router->registerRoutes();

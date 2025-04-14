@@ -3,7 +3,8 @@ use Src\Session;
 
 Session::init();
 
-$style = file_get_contents("../public/index.css") ;
+$style = file_get_contents("../public/index.css");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +12,6 @@ $style = file_get_contents("../public/index.css") ;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.2/dist/tailwind.min.css"> -->
     <style>
         <?php echo $style ?>
     </style>
@@ -24,7 +24,7 @@ $style = file_get_contents("../public/index.css") ;
         require "Components/headerInit.php";
     }
     ?>
-    <!-- Start Generation Here -->
+
     <div class="flex items-center justify-center min-h-screen bg-gray-100">
         <div class="text-center">
             <h1 class="text-4xl font-bold text-gray-800">Bem-vindo ao nosso site!</h1>
@@ -33,6 +33,6 @@ $style = file_get_contents("../public/index.css") ;
             <a href="/produtos" class="mt-6 inline-block px-6 py-3 text-white bg-blue-500 rounded-lg hover:bg-blue-600">Ver Produtos</a>
         </div>
     </div>
-    <!-- End Generation Here -->
+
 </body>
 </html>

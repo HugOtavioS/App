@@ -2,9 +2,7 @@
 namespace Src\Controllers;
 
 use Src\Controllers\ViewController;
-use Config\Database\DatabaseError;
-use Config\Database\Database;
-use Config\env;
+use Config\Database;
 use Src\Request\Request;
 use Src\Session;
 

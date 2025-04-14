@@ -1,25 +1,22 @@
 <?php
-namespace Src\Route\Classes;
+namespace Src\Route;
 
-use Src\Route\Classes\RouteError;
+use Src\Route\RouterError;
 use Src\Request\Request;
 use Src\Session;
 use Exception;
 
-/**
- * Classe responsável por lidar com as rotas da aplicação
- */
 class Router {
 
     private static $routes = [];
     private $routeError;
 
     public function __construct () {
-        $this->routeError = new RouteError();
+        $this->routeError = new RouterError();
     }
 
     public function registerRoutes ():void {
-        require __DIR__ . "../../web.php";
+        require __DIR__ . "../web.php";
         $this->executeActionController();
     }
 

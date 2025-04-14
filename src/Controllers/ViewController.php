@@ -2,9 +2,6 @@
 namespace Src\Controllers;
 
 @["AllowDynamicProperties"];
-/**
- * Classe para carregar as views
- */
 class ViewController {
 
     public function load (string $view, array $params = []):void {

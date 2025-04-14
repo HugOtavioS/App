@@ -1,10 +1,10 @@
 <?php
-namespace Src\Route\Classes;
+namespace Src\Route;
 
 use Src\Controllers\ViewController;
 // use Src\Route\Interfaces\InterfaceRouteError;
 
-class RouteError  {
+class RouterError  {
 
     private ViewController $view;
 

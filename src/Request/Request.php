@@ -1,18 +1,7 @@
 <?php
 namespace Src\Request;
 
-use Src\Request\Interfaces\GetUriInterface;
-use Src\Request\Interfaces\GetVerbInterface;
-use Src\Request\Interfaces\RedirectInterface;
-
-/**
- *  Classe lida com requisições HTTP
- */
 class Request {
-
-    private static GetUriInterface $uri;
-    private static GetVerbInterface $verb;
-    private static RedirectInterface $redirect;
 
     public function __construct () {
 

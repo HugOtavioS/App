@@ -1,5 +1,5 @@
 <?php
-use Src\Route\Classes\Router;
+use Src\Route\Router;
 use Src\Controllers\HomeController;
 use Src\Controllers\LoginController;
 use Src\Controllers\AppController;
