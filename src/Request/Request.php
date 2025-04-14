@@ -14,14 +14,8 @@ class Request {
     private static GetVerbInterface $verb;
     private static RedirectInterface $redirect;
 
-    public function __construct (
-        GetUriInterface $uri,
-        GetVerbInterface $verb,
-        RedirectInterface $redirect
-    ) {
-        self::$uri = $uri;
-        self::$verb = $verb;
-        self::$redirect = $redirect;
+    public function __construct () {
+
     }
 
     public static function getUri (string $separator = "false"):string {
@@ -42,7 +36,7 @@ class Request {
 
     public static function redirect (string $url, int $code = 301):void {
 
-        self::$redirect->redirect($url, $code);
+        header("Location: {$url}", true, $code);
         exit();
         
     }

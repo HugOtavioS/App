@@ -51,9 +51,12 @@ class Router {
         try {
 
             $result = false;
+            $routes = $this->treatRoute(self::$routes);
+            $uri = $this->treatUri(Request::getUri());
     
-            foreach (self::$routes as $route) {
-                if ($route["uri"] === Request::getUri() and 
+            foreach ($routes as $route) {
+                // echo $route["uri"] . " - " . Request::getUri() . "<br>";
+                if ($route["uri"] === $uri and 
                     $route["method"] === Request::getVerb()) {
                     $result = $route;
                 }
@@ -63,8 +66,6 @@ class Router {
                 throw new Exception("Rota não encontrada");
             }
 
-            // $this->verifyProtectedRoute();
-
             return $result;
             
         } catch (Exception $e) {
@@ -72,10 +73,39 @@ class Router {
         }
     }
 
-    private function verifyProtectedRoute ($route):void {
-        try {
+    private function treatUri ($uri) {
+        $uri = explode("?", $uri)[0];
+        return $uri;
+    }
 
+    private function treatRoute ($routes) {
+        try {
+            $newRoutes = [];
+
+            foreach ($routes as $route) {
+                $newUri = explode("?", $route["uri"])[0];
+                $newMethod = $route["method"];
+                $newRoutes[] = [
+                    "uri" => $newUri,
+                    "method" => $newMethod,
+                    "controller" => $route["controller"],
+                    "action" => $route["action"],
+                    "protected" => $route["protected"],
+                ];
+            }
+
+            return $newRoutes;
+        } catch (Exception $e) {
+            
+        }
+    }
+
+    private function verifyProtectedRoute ($route):void {
+
+        try {
             if ($route["protected"] === true) {
+
+                Session::init();
 
                 if (!Session::get("user")) {
                     throw new Exception("Rota protegida, faça login para acessar");
@@ -93,7 +123,7 @@ class Router {
         $route = $this->verifyRouteWithUri();
 
         $this->verifyProtectedRoute($route);
-        
+
         $controller = new $route["controller"];
         $action = $route["action"];
 

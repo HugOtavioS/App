@@ -21,7 +21,7 @@ if (isset($_GET["error"])) {
     }
 }
 
-if (Session::get("session_login")) {
+if (Session::get("user")) {
     Request::redirect("/");
 }
 ?>

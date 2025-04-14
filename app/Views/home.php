@@ -19,7 +19,7 @@ $style = file_get_contents("../public/index.css") ;
 </head>
 <body>
     <?php
-    if (Session::get("session_login")) {
+    if (Session::get("user")) {
         require "Components/header.php";
     }else {
         require "Components/headerInit.php";

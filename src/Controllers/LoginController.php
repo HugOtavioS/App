@@ -3,19 +3,20 @@ namespace Src\Controllers;
 
 use Src\Controllers\ViewController;
 use Config\Database\DatabaseError;
-use Config\Database\database;
+use Config\Database\Database;
 use Config\env;
 use Src\Request\Request;
 use Src\Session;
 
 class LoginController {
     private $view;
+    private static Request $request;
     private $db;
 
     public function __construct () {
 
         $this->view = new ViewController();
-        $this->db = new database(new env, new DatabaseError);
+        $this->db = new Database();
 
     }
     
@@ -34,17 +35,14 @@ class LoginController {
 
         if (count($this->db->select(["*"],"users", "email = '$email' and senha = $senha")) > 0) {
 
-            if (!Session::get("session_login")) {
-                Session::set("session_login", "$email");
+            if (!Session::get("user")) {
+                Session::set("user", $email);
             }
 
-        
             Request::redirect("/");
 
         } else {
-
             Request::redirect("/login?error=0");
-
         }
         
         Session::destroy();
