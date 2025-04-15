@@ -1,9 +1,9 @@
 <?php
-namespace Src\Route;
+namespace Models\Router;
 
-use Src\Route\RouterError;
-use Src\Request\Request;
-use Src\Session;
+use Models\Router\RouterError;
+use Models\Request\Request;
+use Models\Session\Session;
 use Exception;
 
 class Router {

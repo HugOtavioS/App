@@ -1,7 +1,7 @@
 <?php
-namespace Src\Route;
+namespace Models\Router;
 
-use Src\Controllers\ViewController;
+use Controllers\ViewController;
 // use Src\Route\Interfaces\InterfaceRouteError;
 
 class RouterError  {

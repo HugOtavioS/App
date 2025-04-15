@@ -1,7 +1,7 @@
 <?php
-namespace Src\Controllers;
+namespace Controllers;
 
-use Src\Controllers\ViewController;
+use Controllers\ViewController;
 use Config\Database;
 
 class AppController {

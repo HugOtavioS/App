@@ -1,9 +1,9 @@
 <?php
-use Src\Session;
+use Models\Session\Session;
 
 Session::init();
 
-$style = file_get_contents("../public/index.css");
+$style = file_get_contents("App/Controllers/Init/index.css");
 
 ?>
 <!DOCTYPE html>

@@ -1,5 +1,5 @@
 <?php
-namespace Src;
+namespace Models\Session;
 
 class Session {
     public static function init() {

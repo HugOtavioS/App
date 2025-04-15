@@ -1,10 +1,10 @@
 <?php
-use Src\Session;
-use Src\Request\Request;
+use Models\Session\Session;
+use Models\Request\Request;
 
 Session::init();
 
-$style = file_get_contents("../public/index.css") ;
+$style = file_get_contents("App/Controllers/Init/index.css");
 
 if (isset($_GET["error"])) {
 

@@ -1,10 +1,10 @@
 <?php
-namespace Src\Controllers;
+namespace Controllers;
 
-use Src\Controllers\ViewController;
+use Controllers\ViewController;
 use Config\Database;
-use Src\Request\Request;
-use Src\Session;
+use Models\Request\Request;
+use Models\Session\Session;
 
 class LoginController {
     private $view;
