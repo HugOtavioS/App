@@ -1,12 +1,13 @@
 <?php
 namespace Controllers;
 
+use Controllers\Interfaces\ControllerInterface;
 use Controllers\ViewController;
 use Config\Database;
 use Models\Request\Request;
 use Models\Session\Session;
 
-class LoginController {
+class LoginController implements ControllerInterface {
     private $view;
     private static Request $request;
     private $db;
@@ -18,7 +19,7 @@ class LoginController {
 
     }
     
-    public function index() {
+    public function index(...$args) {
 
         $this->view->load("login", ["title" => "Login"]);
 

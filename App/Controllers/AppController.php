@@ -1,10 +1,11 @@
 <?php
 namespace Controllers;
 
+use Controllers\Interfaces\ControllerInterface;
 use Controllers\ViewController;
 use Config\Database;
 
-class AppController {
+class AppController implements ControllerInterface {
 
     private $view;
     private $db;
@@ -14,7 +15,7 @@ class AppController {
         $this->db = new Database();
     }
     
-    public function index() {
+    public function index(...$args) {
         $this->view->load("app", ["title" => "App"]);
     }
 

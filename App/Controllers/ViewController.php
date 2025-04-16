@@ -1,8 +1,14 @@
 <?php
 namespace Controllers;
 
+use Controllers\Interfaces\ControllerInterface;
+
 @["AllowDynamicProperties"];
-class ViewController {
+class ViewController implements ControllerInterface {
+
+    public function index(...$args) {
+
+    }
 
     public function load (string $view, array $params = []):void {
 

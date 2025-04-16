@@ -4,7 +4,7 @@ use Models\Request\Request;
 
 Session::init();
 
-$style = file_get_contents("App/Controllers/Init/index.css");
+$style = file_get_contents(__STYLE__);
 
 if (isset($_GET["error"])) {
 

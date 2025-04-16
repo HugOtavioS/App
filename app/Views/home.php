@@ -3,8 +3,7 @@ use Models\Session\Session;
 
 Session::init();
 
-// $style = file_get_contents(__STYLE__) ;
-$style = file_get_contents("App/Controllers/Init/index.css");
+$style = file_get_contents(__STYLE__) ;
 
 ?>
 <!DOCTYPE html>

@@ -5,7 +5,7 @@ class env {
     
     private $env;
     public function __construct() {
-        $this->env = "../.env";
+        $this->env = __ENV__;
     }
 
     public function getEnvContent():array|bool {
