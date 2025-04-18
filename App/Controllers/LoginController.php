@@ -1,9 +1,10 @@
 <?php
 namespace Controllers;
 
+use Config\env;
 use Controllers\Interfaces\ControllerInterface;
 use Controllers\ViewController;
-use Config\Database;
+use Config\Database\Database;
 use Models\Request\Request;
 use Models\Session\Session;
 
@@ -15,7 +16,7 @@ class LoginController implements ControllerInterface {
     public function __construct () {
 
         $this->view = new ViewController();
-        $this->db = new Database();
+        $this->db = new Database(new env());
 
     }
     
@@ -32,7 +33,7 @@ class LoginController implements ControllerInterface {
 
         Session::init();
 
-        if (count($this->db->select(["*"],"users", "email = '$email' and senha = $senha")) > 0) {
+        if (count($this->db->read("users",["*"], "email = '$email' and senha = '$senha'")) > 0) {
 
             if (!Session::get("user")) {
                 Session::set("user", $email);
