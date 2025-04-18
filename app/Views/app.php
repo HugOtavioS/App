@@ -29,7 +29,7 @@ $style = file_get_contents(__STYLE__) ;
         <div class="text-center">
             <h1 class="text-4xl font-bold text-gray-800">Bem-vindo ao nosso site!</h1>
             <h2 class="text-gray-800"><?php echo $this->title ?></h2>
-            <p class="mt-4 text-lg text-gray-600">Estamos felizes em tê-lo aqui. Explore nossos produtos e serviços.</p>
+            <p class="mt-4 text-lg text-gray-600"></p>
             <a href="/produtos" class="mt-6 inline-block px-6 py-3 text-white bg-blue-500 rounded-lg hover:bg-blue-600">Ver Produtos</a>
         </div>
     </div>

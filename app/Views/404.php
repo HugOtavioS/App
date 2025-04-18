@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Erro 404</title>
     <style>
-        <?php echo file_get_contents("../public/index.css") ?>
+        <?php echo file_get_contents(__STYLE__) ?>
     </style>
 </head>
 <body class="bg-gray-100">

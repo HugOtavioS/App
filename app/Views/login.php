@@ -1,10 +1,10 @@
 <?php
-use App\Session;
-use App\Request\Request;
+use Models\Session\Session;
+use Models\Request\Request;
 
 Session::init();
 
-$style = file_get_contents("../public/index.css") ;
+$style = file_get_contents(__STYLE__);
 
 if (isset($_GET["error"])) {
 
@@ -19,11 +19,13 @@ if (isset($_GET["error"])) {
             $error = "Coloque sua Senha";
         default:
     }
+    
 }
 
-if (Session::get("session_login")) {
+if (Session::get("user")) {
     Request::redirect("/");
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,14 +33,13 @@ if (Session::get("session_login")) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.2/dist/tailwind.min.css"> -->
     <style>
         <?php echo $style ?>
     </style>
 </head>
 <body>
     <?php require "Components/headerInit.php" ?>
-    <!-- Start Generation Here -->
+
     <div class="flex items-center justify-center min-h-screen bg-gray-100">
         <div class="text-center">
             <h1 class="text-4xl font-bold text-gray-800">Bem-vindo ao nosso site!</h1>
@@ -66,6 +67,6 @@ if (Session::get("session_login")) {
             </form>
         </div>
     </div>
-    <!-- End Generation Here -->
+
 </body>
 </html>

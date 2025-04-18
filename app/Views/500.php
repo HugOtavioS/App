@@ -1,5 +1,5 @@
 <?php
-// Start Generation Here
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Erro 500</title>
     <style>
-        <?php echo file_get_contents("../public/index.css") ?>
+        <?php echo file_get_contents(__STYLE__) ?>
     </style>
 </head>
 <body class="bg-red-100">
