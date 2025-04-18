@@ -14,7 +14,9 @@ class RouteExecute implements RouteExecuteInterface {
 
     public function executeActionController ($routes): void {
 
-        $route = $this->verifyRoutes->verifyRouteWithUri($routes);
+        $this->verifyRoutes->setProperties($routes);
+
+        $route = $this->verifyRoutes->verifyRouteWithUri();
 
         $this->verifyRoutes->verifyProtectedRoute($route);
 

@@ -3,7 +3,7 @@ namespace Models\Router\Interfaces;
 
 interface VerifyRoutesInterface {
     public function verifyExistsAction ($controller, $action);
-    public function verifyRouteWithUri (array $routes);
+    public function verifyRouteWithUri ();
     public function verifyProtectedRoute (array $route);
     public function treatRoute (array $routes);
     public function treatUri (string $uri);

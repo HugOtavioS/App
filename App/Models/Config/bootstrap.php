@@ -9,9 +9,13 @@ define("__ENV__", "./.env");
 
 $router = new Router(
     new RouterError(),
-    new VerifyRoutes( ),
+    new VerifyRoutes(
+        new RouterError()
+    ),
     new RouteExecute(
-        new VerifyRoutes( )
+        new VerifyRoutes(
+            new RouterError()
+        )
     )
 );
 $router->registerRoutes();

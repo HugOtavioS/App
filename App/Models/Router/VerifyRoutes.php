@@ -12,12 +12,15 @@ class VerifyRoutes implements VerifyRoutesInterface {
     private $routeError;
 
 
-    public function __construct() {
-
+    public function __construct(RouterError $routerError) {
+        $this->routeError = $routerError;
     }
 
-    public function verifyRouteWithUri ($routes) {
+    public function setProperties(array $routes) {
         self::$routes = $routes;
+    }
+
+    public function verifyRouteWithUri () {
         try {
 
             $result = false;
