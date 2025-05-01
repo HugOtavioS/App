@@ -3,8 +3,6 @@ use Models\Session\Session;
 
 Session::init();
 
-$style = file_get_contents(__STYLE__) ;
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,9 +10,7 @@ $style = file_get_contents(__STYLE__) ;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        <?php echo $style ?>
-    </style>
+    <link href="index.css" rel="stylesheet">
 </head>
 <body>
     <?php

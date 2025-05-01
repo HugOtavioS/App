@@ -42,6 +42,11 @@ class Database implements DatabaseInterface {
     public function create(array $data, string $table, ?string $where = null): bool {
         $stmt = $this->connect();
         $columns = implode(", ", array_keys($data));
+
+        foreach ($data as $key => $value) {
+            $data[$key] = "'" . $value . "'";
+        }
+
         $values = implode(", ", array_values($data));
 
         $sql = "INSERT INTO $table ($columns) VALUES ($values)";

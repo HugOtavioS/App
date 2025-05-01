@@ -15,6 +15,7 @@ $style = file_get_contents(__STYLE__) ;
     <style>
         <?php echo $style ?>
     </style>
+    <link href="index.css" rel="stylesheet">
 </head>
 <body>
     <?php

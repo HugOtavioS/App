@@ -1,15 +1,10 @@
-<?php
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Erro 500</title>
-    <style>
-        <?php echo file_get_contents(__STYLE__) ?>
-    </style>
+    <link href="index.css" rel="stylesheet">
 </head>
 <body class="bg-red-100">
     <div class="flex items-center justify-center min-h-screen">
