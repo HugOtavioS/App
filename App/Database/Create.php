@@ -3,8 +3,8 @@
 namespace Database;
 
 use Database\Interfaces\CreateInterface;
-use Database\Database;
 use Database\Connect;
+use Exceptions\Database\CreateException;
 
 class Create implements CreateInterface {
     private $db;
@@ -28,12 +28,15 @@ class Create implements CreateInterface {
 
             $stmt->execute($data);
 
-            throw new \PDOException("Erro ao inserir registro: " . $stmt->errorInfo()[2]);
+            if ($stmt->rowCount() > 0) {
+                return [
+                    'success' => true,
+                    'message' => 'Registro inserido com sucesso'
+                ];
+            }
+            throw new CreateException("Erro ao inserir registro: " . $stmt->errorInfo()[2]);
         } catch (\PDOException $e) {
-            return [
-                'success' => false,
-                'message' => 'Erro ao inserir registro: ' . $e->getMessage()
-            ];
+            throw new CreateException("Erro ao inserir registro: " . $stmt->errorInfo()[2]);
         }
     }
 }

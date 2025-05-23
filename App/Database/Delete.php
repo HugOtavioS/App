@@ -4,6 +4,7 @@ namespace Database;
 
 use Database\Interfaces\DeleteInterface;
 use Database\Connect;
+use Exceptions\Database\DeleteException;
 
 class Delete implements DeleteInterface {
     private $db;
@@ -13,9 +14,13 @@ class Delete implements DeleteInterface {
     }
 
     public function delete($table, $id) {
-        $query = "DELETE FROM {$table} WHERE id = :id";
-        $stmt = $this->db->prepare($query);
-        $stmt->execute(['id' => $id]);
-        return $stmt->rowCount();
+        try {
+            $query = "DELETE FROM {$table} WHERE id = :id";
+            $stmt = $this->db->prepare($query);
+            $stmt->execute(['id' => $id]);
+            return $stmt->rowCount();
+        } catch (\PDOException $e) {
+            throw new DeleteException("Erro ao deletar registro: " . $e->getMessage());
+        }
     }
 }
