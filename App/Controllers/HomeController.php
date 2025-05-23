@@ -1,17 +1,13 @@
 <?php
-namespace Controllers;
 
-use Controllers\ViewController;
-use Controllers\Interfaces\ControllerInterface;
+namespace App\Controllers;
 
-class HomeController implements ControllerInterface{
-    private $view;
+use Models\ViewLoader;
 
-    public function __construct () {
-        $this->view = new ViewController();
+class HomeController {
+
+    public function index() {
+        ViewLoader::load('home', ['title' => 'Home']);
     }
 
-    public function index (...$args) {
-        $this->view->load("home", ["title" => "Home"]);
-    }
 }
