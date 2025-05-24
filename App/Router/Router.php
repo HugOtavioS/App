@@ -2,12 +2,13 @@
 
 namespace Router;
 
+use Router\Interfaces\RouterInterface;
 use Http\Interfaces\RequestInterface;
 use Http\Request;
 use Router\VerifyRoutes;
 use Router\CallCallback;
 
-class Router {
+class Router implements RouterInterface {
 
     public static $routes = [];
     private Request $request;
@@ -19,6 +20,11 @@ class Router {
     public function run() {
         $verifyRoutes = new VerifyRoutes($this->request, self::$routes);
         $route = $verifyRoutes->verifyRoutes();
+
+        if ($route === true) {
+            return;
+        }
+
         $callCallback = new CallCallback($route);
         $callCallback->callCallback();
     }
@@ -50,6 +56,17 @@ class Router {
             "callback" => $callback,
             "protected" => true,
             "admin" => true
+        ];
+    }
+
+    public static function addFreeRoute($method, $uri) {
+        self::$routes[] = [
+            "uri" => $uri,
+            "method" => $method,
+            "callback" => null,
+            "protected" => false,
+            "admin" => false,
+            "free" => true
         ];
     }
 

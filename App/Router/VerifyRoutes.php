@@ -18,6 +18,10 @@ class VerifyRoutes implements VerifyRoutesInterface {
 
     public function verifyRoutes() {
         foreach ($this->routes as $route) {
+            if ($this->verifyFreeRoute($route)) {
+                return true;
+            }
+
             if ($route['uri'] === $this->request->getUri() && $route['method'] === $this->request->getMethod()) {
                 if ($this->verifyProtectedRoute($route)) {
                     return $route;
@@ -43,6 +47,13 @@ class VerifyRoutes implements VerifyRoutesInterface {
 
     public function verifyAdminRoute(array $route) {
         if ($route['admin'] === true) {
+            return true;
+        }
+        return false;
+    }
+
+    public function verifyFreeRoute(array $route) {
+        if (isset($route['free']) && $route['free'] === true) {
             return true;
         }
         return false;
