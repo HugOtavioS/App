@@ -3,7 +3,8 @@
 namespace Router\Interfaces;
 
 interface RouterInterface {
-    public function addRoute($method, $uri, $callback);
-    public function addProtectedRoute($method, $uri, $callback);
-    public function addAdminRoute($method, $uri, $callback);
+    public static function addRoute($method, $uri, $callback);
+    public static function addProtectedRoute($method, $uri, $callback);
+    public static function addAdminRoute($method, $uri, $callback);
+    public static function addFreeRoute($method, $uri, $callback);
 }
