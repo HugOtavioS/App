@@ -1,0 +1,19 @@
+{
+  "scripts": {
+    "build": "babel src --out-dir public --extensions '.jsx,.js'",
+    "webpack": "npx webpack --watch --config webpack.config.js",
+    "babel": "npx babel --watch pages --out-dir pages"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.27.2",
+    "@babel/core": "^7.27.1",
+    "@babel/preset-env": "^7.27.2",
+    "@babel/preset-react": "^7.27.1",
+    "webpack": "^5.99.9",
+    "webpack-cli": "^6.0.1"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  }
+}

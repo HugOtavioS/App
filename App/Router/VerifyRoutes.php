@@ -18,11 +18,12 @@ class VerifyRoutes implements VerifyRoutesInterface {
 
     public function verifyRoutes() {
         foreach ($this->routes as $route) {
-            if ($this->verifyFreeRoute($route)) {
-                return true;
-            }
-
+            
             if ($route['uri'] === $this->request->getUri() && $route['method'] === $this->request->getMethod()) {
+                if ($this->verifyFreeRoute($route)) {
+                    return $route;
+                }
+
                 if ($this->verifyProtectedRoute($route)) {
                     return $route;
                 }

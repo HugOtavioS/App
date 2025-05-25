@@ -59,11 +59,11 @@ class Router implements RouterInterface {
         ];
     }
 
-    public static function addFreeRoute($method, $uri) {
+    public static function addFreeRoute($method, $uri, $callback) {
         self::$routes[] = [
             "uri" => $uri,
             "method" => $method,
-            "callback" => null,
+            "callback" => $callback,
             "protected" => false,
             "admin" => false,
             "free" => true
