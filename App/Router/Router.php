@@ -21,10 +21,6 @@ class Router implements RouterInterface {
         $verifyRoutes = new VerifyRoutes($this->request, self::$routes);
         $route = $verifyRoutes->verifyRoutes();
 
-        if ($route === true) {
-            return;
-        }
-
         $callCallback = new CallCallback($route);
         $callCallback->callCallback();
     }
