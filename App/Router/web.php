@@ -4,19 +4,30 @@ use Router\Router;
 use Models\ViewLoader;
 
 Router::addRoute('GET', '/', function () {
-    // echo 'Hello World | GET "/"';
     $view = new ViewLoader();
     $view->load("home");
 });
 
-Router::addRoute('POST', '/', function() {
-    echo 'Hello World | POST "/"';
+Router::addRoute('GET', '/about', function() {
+    $view = new ViewLoader();
+    $view->load("about");
 });
 
-Router::addProtectedRoute('GET', '/protected', function() {
-    echo 'Hello Protected';
+Router::addRoute('GET', '/contact', function() {
+    $view = new ViewLoader();
+    $view->load("contact");
 });
 
-Router::addAdminRoute('GET', '/admin', function() {
-    echo 'Hello Admin';
+Router::addRoute('GET', '/login', function() {
+    $view = new ViewLoader();
+    $view->load("login");
+});
+
+Router::addRoute('POST', '/login', function() {
+    echo "Ola";
+});
+
+Router::addRoute('GET', '/register', function() {
+    $view = new ViewLoader();
+    $view->load("register");
 });

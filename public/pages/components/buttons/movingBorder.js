@@ -16,7 +16,7 @@ export function Button({
   ...otherProps
 }) {
   return /*#__PURE__*/_jsxs(Component, {
-    className: cn("relative h-16 w-40 overflow-hidden bg-transparent p-[1px] text-xl", containerClassName),
+    className: cn("relative h-16 w-fit min-w-40 overflow-hidden bg-transparent p-[1px] text-xl", containerClassName),
     style: {
       borderRadius: borderRadius
     },

@@ -7,13 +7,13 @@ import ButtonRegister from './buttons/buttonRegister';
 
 function Footer() {
     return (
-        <footer className='flex justify-between gap-12 w-full bg-[#D4C9BE] px-16 py-12'>
+        <footer className='flex justify-between gap-12 w-full bg-[#06202B] px-16 py-12 text-white'>
             <div className="">
                 <p>© 2023 Appy. Todos os direitos reservados.</p>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 text-black">
                 <ButtonHome
-                    link={"/home"}
+                    link={"/"}
                     className={"hover:-translate-y-[2px] hover:bg-[#f1efec]/60 duration-150"}
                 />
                 <ButtonAbout

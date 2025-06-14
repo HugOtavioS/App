@@ -8,7 +8,7 @@ function CardHome({
 }) {
   return /*#__PURE__*/_jsxs(Card, {
     isFooterBlurred: true,
-    className: `border border-[#D4C9BE] rounded-3xl p-4 ${contentButton ? "pb-15" : ""} w-112 min-h-20 ${className}`,
+    className: `border border-[#D4C9BE] rounded-3xl p-12 ${contentButton ? "pb-15" : ""} w-112 min-h-20 ${className}`,
     radius: "lg",
     children: [/*#__PURE__*/_jsx("p", {
       className: "",

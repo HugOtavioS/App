@@ -3,7 +3,7 @@ import {Card, CardFooter} from "/node_modules/@heroui/card";
 
 function CardHome({ contentBody, contentButton, className }) {
     return (
-        <Card isFooterBlurred className={`border border-[#D4C9BE] rounded-3xl p-4 ${contentButton ? "pb-15" : ""} w-112 min-h-20 ${className}`} radius="lg">
+        <Card isFooterBlurred className={`border border-[#D4C9BE] rounded-3xl p-12 ${contentButton ? "pb-15" : ""} w-112 min-h-20 ${className}`} radius="lg">
             <p className="">
                 {contentBody}
             </p>
