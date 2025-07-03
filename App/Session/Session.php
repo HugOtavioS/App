@@ -20,7 +20,7 @@ class Session implements SessionInterface {
         try {
             $_SESSION[$key] = $value;
         } catch (\Exception $e) {
-            throw new SessionSetException("Erro ao definir o valor da sessão: " . $e->getMessage());
+            return false;
         }
     }
 
@@ -28,7 +28,7 @@ class Session implements SessionInterface {
         try {
             return $_SESSION[$key];
         } catch (\Exception $e) {
-            throw new SessionGetException("Erro ao obter o valor da sessão: " . $e->getMessage());
+            return false;
         }
     }
 
@@ -36,7 +36,7 @@ class Session implements SessionInterface {
         try {
             session_destroy();
         } catch (\Exception $e) {
-            throw new SessionDestroyException("Erro ao destruir a sessão: " . $e->getMessage());
+            return false;
         }
     }
 
@@ -44,7 +44,7 @@ class Session implements SessionInterface {
         try {
             session_regenerate_id(true);
         } catch (\Exception $e) {
-            throw new SessionRegenerateException("Erro ao regenerar o ID da sessão: " . $e->getMessage());
+            return false;
         }
     }
 
@@ -52,7 +52,7 @@ class Session implements SessionInterface {
         try {
             session_regenerate_id(true);
         } catch (\Exception $e) {
-            throw new SessionRegenerateIdException("Erro ao regenerar o ID da sessão: " . $e->getMessage());
+            return false;
         }
     }
 

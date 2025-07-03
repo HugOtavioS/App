@@ -1,6 +1,7 @@
 import { createRoot } from '/node_modules/react-dom/client';
 import React, { useState } from "react";
-import { ArrowRight, LockSimple, EnvelopeSimple, User, GoogleLogo } from '/node_modules/@phosphor-icons/react';
+import { ArrowRight, LockSimple, EnvelopeSimple, User, GoogleLogo, WarningCircle } from '/node_modules/@phosphor-icons/react';
+import axios from "/node_modules/axios";
 
 import HeaderCommon from './components/headerCommon';
 import Footer from './components/footer';
@@ -12,6 +13,166 @@ import { BackgroundBeams } from './components/background-beams';
 function Register() {
     const words = "Comece sua jornada para uma vida mais organizada e produtiva com o Appy.";
     const [passwordMatch, setPasswordMatch] = useState(true);
+    const [resForm, setResForm] = useState({
+        name: "",
+        email: "",
+        password: "",
+        passwordConfirmed: "",
+        terms: "",
+        statusRegister: ""
+    });
+
+    const errors = {
+        nameUndefined: "Digite a seu nome!",
+        emailUndefined: "Digite seu email!",
+        passUndefined: "Digite a sua senha!",
+        passConfirmUndefined: "Conforme a sua senha!",
+        termsUndefined: "Aceite nossos termos para se registrar!",
+        userFound: "Nenhum usuário encontrado!",
+    }
+
+    const viewErrors = {
+        nameUndefined: (
+            <div className="mt-2 text-sm text-red-600 bg-red-100/75 border border-red-300 rounded-lg px-3 py-2 flex items-center gap-2">
+                <WarningCircle size={24} />
+                <span>{errors.nameUndefined}</span>
+            </div>
+        ),
+        emailUndefined: (
+            <div className="mt-2 text-sm text-red-600 bg-red-100/75 border border-red-300 rounded-lg px-3 py-2 flex items-center gap-2">
+                <WarningCircle size={24} />
+                <span>{errors.emailUndefined}</span>
+            </div>
+        ),
+        passUndefined: (
+            <div className="mt-2 text-sm text-red-600 bg-red-100/75 border border-red-300 rounded-lg px-3 py-2 flex items-center gap-2">
+                <WarningCircle size={24} />
+                <span>{errors.passUndefined}</span>
+            </div>
+        ),
+        passConfirmUndefined: (
+            <div className="mt-2 text-sm text-red-600 bg-red-100/75 border border-red-300 rounded-lg px-3 py-2 flex items-center gap-2">
+                <WarningCircle size={24} />
+                <span>{errors.passConfirmUndefined}</span>
+            </div>
+        ),
+        termsUndefined: (
+            <div className="mt-2 text-sm text-red-600 bg-red-100/75 border border-red-300 rounded-lg px-3 py-2 flex items-center gap-2">
+                <WarningCircle size={24} />
+                <span>{errors.termsUndefined}</span>
+            </div>
+        ),
+        userFound: (
+            <div className="mt-2 text-sm text-red-600 bg-red-100/75 border border-red-300 rounded-lg px-3 py-2 flex items-center gap-2">
+                <WarningCircle size={24} />
+                <span>{errors.userFound}</span>
+            </div>
+        )
+    }
+
+    const handleForm = async (event) => {
+
+        event.preventDefault();
+        const formName = event.target.name.value;
+        const formEmail = event.target.email.value;
+        const formPassword = event.target.password.value;
+        const formPasswordConfirmed = event.target.password_confirm.value;
+        const formTerms = event.target.terms.value;
+
+        setResForm(prev => ({
+            ...prev,
+            statusRegister: ""
+        }))
+
+        if (formName == "") {
+            setResForm(prev => ({
+                ...prev,
+                email: "false"
+            }));
+        } else {
+            setResForm(prev => ({
+                ...prev,
+                email: "true"
+            }));
+        }
+
+        if (formEmail == "") {
+            setResForm(prev => ({
+                ...prev,
+                email: "false"
+            }));
+        } else {
+            setResForm(prev => ({
+                ...prev,
+                email: "true"
+            }));
+        }
+
+        if (formPassword == "") {
+            setResForm(prev => ({
+                ...prev,
+                password: "false",
+            }));
+        } else {
+            setResForm(prev => ({
+                ...prev,
+                password: "true",
+            }));
+        }
+
+        if (formPasswordConfirmed == "") {
+            setResForm(prev => ({
+                ...prev,
+                password: "false",
+            }));
+        } else {
+            setResForm(prev => ({
+                ...prev,
+                password: "true",
+            }));
+        }
+
+        if (formTerms == "") {
+            setResForm(prev => ({
+                ...prev,
+                password: "false",
+            }));
+        } else {
+            setResForm(prev => ({
+                ...prev,
+                password: "true",
+            }));
+        }
+
+        if (
+            formName == "" ||
+            formEmail == "" ||
+            formPassword == "" ||
+            formPasswordConfirmed == "" ||
+            formTerms == ""
+        ) {
+            return;
+        }
+
+        await axios.post("/api/register", {
+            name: formName,
+            email: formEmail,
+            password: formPassword,
+            password_confirm: formPasswordConfirmed,
+            terms: formTerms
+        }, {
+            headers: {
+            'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then(function (response) {
+            response.data == false && setResForm(prev => ({
+                ...prev,
+                statusRegister: "false"
+            }));
+        })
+
+    }
 
     const handlePasswordConfirm = (e) => {
         const password = document.getElementById('password').value;
@@ -35,7 +196,7 @@ function Register() {
                                     
                                     {/* Social Register */}
                                     <div className="mb-8">
-                                        <button className="w-full flex items-center justify-center gap-2 bg-white text-[#06202B] border-2 border-[#06202B] rounded-lg px-4 py-3 font-medium hover:bg-[#06202B] hover:text-white transition-colors">
+                                        <button className="w-full flex items-center justify-center gap-2 bg-white text-[#06202B] border-2 border-[#06202B] rounded-lg cursor-pointer px-4 py-3 font-medium hover:bg-[#06202B] hover:text-white transition-colors">
                                             <GoogleLogo size={24} />
                                             Cadastrar com Google
                                         </button>
@@ -51,7 +212,9 @@ function Register() {
                                     </div>
 
                                     {/* Register Form */}
-                                    <form method="POST" action="/register" className="space-y-6">
+                                    <form onSubmit={(event) => {handleForm(event)}} className="space-y-6">
+                                        {resForm.statusRegister == "false" && viewErrors["userFound"]}
+
                                         <div>
                                             <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                                                 Nome Completo
@@ -69,6 +232,7 @@ function Register() {
                                                     placeholder="Seu nome completo"
                                                 />
                                             </div>
+                                            {resForm.name == "false" && viewErrors["nameUndefined"]}
                                         </div>
 
                                         <div>

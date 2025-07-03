@@ -28,7 +28,7 @@ class VerifyRoutes implements VerifyRoutesInterface {
                     return $route;
                 }
 
-                if ($this->verifyAdminRoute($route)) {
+                if ($this->verifyApiRoute($route)) {
                     return $route;
                 }
 
@@ -46,8 +46,8 @@ class VerifyRoutes implements VerifyRoutesInterface {
         return false;
     }
 
-    public function verifyAdminRoute(array $route) {
-        if ($route['admin'] === true) {
+    public function verifyApiRoute(array $route) {
+        if ($route['api'] === true) {
             return true;
         }
         return false;

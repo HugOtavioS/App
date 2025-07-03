@@ -1,6 +1,7 @@
 import { createRoot } from '/node_modules/react-dom/client';
 import React, { useState } from "react";
-import { ArrowRight, LockSimple, EnvelopeSimple, User, GoogleLogo } from '/node_modules/@phosphor-icons/react';
+import { ArrowRight, LockSimple, EnvelopeSimple, User, GoogleLogo, WarningCircle } from '/node_modules/@phosphor-icons/react';
+import axios from "/node_modules/axios";
 import HeaderCommon from './components/headerCommon';
 import Footer from './components/footer';
 import { Button } from './components/buttons/movingBorder';
@@ -11,6 +12,158 @@ import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-run
 function Register() {
   const words = "Comece sua jornada para uma vida mais organizada e produtiva com o Appy.";
   const [passwordMatch, setPasswordMatch] = useState(true);
+  const [resForm, setResForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    passwordConfirmed: "",
+    terms: "",
+    statusRegister: ""
+  });
+  const errors = {
+    nameUndefined: "Digite a seu nome!",
+    emailUndefined: "Digite seu email!",
+    passUndefined: "Digite a sua senha!",
+    passConfirmUndefined: "Conforme a sua senha!",
+    termsUndefined: "Aceite nossos termos para se registrar!",
+    userFound: "Nenhum usuário encontrado!"
+  };
+  const viewErrors = {
+    nameUndefined: /*#__PURE__*/_jsxs("div", {
+      className: "mt-2 text-sm text-red-600 bg-red-100/75 border border-red-300 rounded-lg px-3 py-2 flex items-center gap-2",
+      children: [/*#__PURE__*/_jsx(WarningCircle, {
+        size: 24
+      }), /*#__PURE__*/_jsx("span", {
+        children: errors.nameUndefined
+      })]
+    }),
+    emailUndefined: /*#__PURE__*/_jsxs("div", {
+      className: "mt-2 text-sm text-red-600 bg-red-100/75 border border-red-300 rounded-lg px-3 py-2 flex items-center gap-2",
+      children: [/*#__PURE__*/_jsx(WarningCircle, {
+        size: 24
+      }), /*#__PURE__*/_jsx("span", {
+        children: errors.emailUndefined
+      })]
+    }),
+    passUndefined: /*#__PURE__*/_jsxs("div", {
+      className: "mt-2 text-sm text-red-600 bg-red-100/75 border border-red-300 rounded-lg px-3 py-2 flex items-center gap-2",
+      children: [/*#__PURE__*/_jsx(WarningCircle, {
+        size: 24
+      }), /*#__PURE__*/_jsx("span", {
+        children: errors.passUndefined
+      })]
+    }),
+    passConfirmUndefined: /*#__PURE__*/_jsxs("div", {
+      className: "mt-2 text-sm text-red-600 bg-red-100/75 border border-red-300 rounded-lg px-3 py-2 flex items-center gap-2",
+      children: [/*#__PURE__*/_jsx(WarningCircle, {
+        size: 24
+      }), /*#__PURE__*/_jsx("span", {
+        children: errors.passConfirmUndefined
+      })]
+    }),
+    termsUndefined: /*#__PURE__*/_jsxs("div", {
+      className: "mt-2 text-sm text-red-600 bg-red-100/75 border border-red-300 rounded-lg px-3 py-2 flex items-center gap-2",
+      children: [/*#__PURE__*/_jsx(WarningCircle, {
+        size: 24
+      }), /*#__PURE__*/_jsx("span", {
+        children: errors.termsUndefined
+      })]
+    }),
+    userFound: /*#__PURE__*/_jsxs("div", {
+      className: "mt-2 text-sm text-red-600 bg-red-100/75 border border-red-300 rounded-lg px-3 py-2 flex items-center gap-2",
+      children: [/*#__PURE__*/_jsx(WarningCircle, {
+        size: 24
+      }), /*#__PURE__*/_jsx("span", {
+        children: errors.userFound
+      })]
+    })
+  };
+  const handleForm = async event => {
+    event.preventDefault();
+    const formName = event.target.name.value;
+    const formEmail = event.target.email.value;
+    const formPassword = event.target.password.value;
+    const formPasswordConfirmed = event.target.password_confirm.value;
+    const formTerms = event.target.terms.value;
+    setResForm(prev => ({
+      ...prev,
+      statusRegister: ""
+    }));
+    if (formName == "") {
+      setResForm(prev => ({
+        ...prev,
+        email: "false"
+      }));
+    } else {
+      setResForm(prev => ({
+        ...prev,
+        email: "true"
+      }));
+    }
+    if (formEmail == "") {
+      setResForm(prev => ({
+        ...prev,
+        email: "false"
+      }));
+    } else {
+      setResForm(prev => ({
+        ...prev,
+        email: "true"
+      }));
+    }
+    if (formPassword == "") {
+      setResForm(prev => ({
+        ...prev,
+        password: "false"
+      }));
+    } else {
+      setResForm(prev => ({
+        ...prev,
+        password: "true"
+      }));
+    }
+    if (formPasswordConfirmed == "") {
+      setResForm(prev => ({
+        ...prev,
+        password: "false"
+      }));
+    } else {
+      setResForm(prev => ({
+        ...prev,
+        password: "true"
+      }));
+    }
+    if (formTerms == "") {
+      setResForm(prev => ({
+        ...prev,
+        password: "false"
+      }));
+    } else {
+      setResForm(prev => ({
+        ...prev,
+        password: "true"
+      }));
+    }
+    if (formName == "" || formEmail == "" || formPassword == "" || formPasswordConfirmed == "" || formTerms == "") {
+      return;
+    }
+    await axios.post("/api/register", {
+      name: formName,
+      email: formEmail,
+      password: formPassword,
+      password_confirm: formPasswordConfirmed,
+      terms: formTerms
+    }, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(function (response) {
+      response.data == false && setResForm(prev => ({
+        ...prev,
+        statusRegister: "false"
+      }));
+    });
+  };
   const handlePasswordConfirm = e => {
     const password = document.getElementById('password').value;
     setPasswordMatch(e.target.value === password);
@@ -36,7 +189,7 @@ function Register() {
                 }), /*#__PURE__*/_jsx("div", {
                   className: "mb-8",
                   children: /*#__PURE__*/_jsxs("button", {
-                    className: "w-full flex items-center justify-center gap-2 bg-white text-[#06202B] border-2 border-[#06202B] rounded-lg px-4 py-3 font-medium hover:bg-[#06202B] hover:text-white transition-colors",
+                    className: "w-full flex items-center justify-center gap-2 bg-white text-[#06202B] border-2 border-[#06202B] rounded-lg cursor-pointer px-4 py-3 font-medium hover:bg-[#06202B] hover:text-white transition-colors",
                     children: [/*#__PURE__*/_jsx(GoogleLogo, {
                       size: 24
                     }), "Cadastrar com Google"]
@@ -56,10 +209,11 @@ function Register() {
                     })
                   })]
                 }), /*#__PURE__*/_jsxs("form", {
-                  method: "POST",
-                  action: "/register",
+                  onSubmit: event => {
+                    handleForm(event);
+                  },
                   className: "space-y-6",
-                  children: [/*#__PURE__*/_jsxs("div", {
+                  children: [resForm.statusRegister == "false" && viewErrors["userFound"], /*#__PURE__*/_jsxs("div", {
                     children: [/*#__PURE__*/_jsx("label", {
                       htmlFor: "name",
                       className: "block text-sm font-medium text-gray-700 mb-2",
@@ -79,7 +233,7 @@ function Register() {
                         className: "w-full pl-10 px-4 py-3 rounded-lg bg-gray-50 border border-gray-300 focus:ring-2 focus:ring-[#06202B] focus:border-transparent",
                         placeholder: "Seu nome completo"
                       })]
-                    })]
+                    }), resForm.name == "false" && viewErrors["nameUndefined"]]
                   }), /*#__PURE__*/_jsxs("div", {
                     children: [/*#__PURE__*/_jsx("label", {
                       htmlFor: "email",

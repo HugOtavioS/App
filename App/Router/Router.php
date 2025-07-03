@@ -31,7 +31,7 @@ class Router implements RouterInterface {
             "method" => $method,
             "callback" => $callback,
             "protected" => false,
-            "admin" => false
+            "api" => false
         ];
     }
 
@@ -41,17 +41,17 @@ class Router implements RouterInterface {
             "method" => $method,
             "callback" => $callback,
             "protected" => true,
-            "admin" => false
+            "api" => false
         ];
     }
 
-    public static function addAdminRoute($method, $uri, $callback) {
+    public static function addApiRoute($method, $uri, $callback) {
         self::$routes[] = [
             "uri" => $uri,
             "method" => $method,
             "callback" => $callback,
             "protected" => true,
-            "admin" => true
+            "api" => true
         ];
     }
 
@@ -61,7 +61,7 @@ class Router implements RouterInterface {
             "method" => $method,
             "callback" => $callback,
             "protected" => false,
-            "admin" => false,
+            "api" => false,
             "free" => true
         ];
     }

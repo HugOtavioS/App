@@ -35,8 +35,8 @@ class Database implements DatabaseInterface {
         return $this->create->create($table, $data, $where);
     }
 
-    public function read($table, $id = null) {
-        return $this->read->read($table, $id);
+    public function read($table, ...$where) {
+        return $this->read->read($table, $where);
     }
 
     public function update($table, $id, $data) {

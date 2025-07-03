@@ -4,7 +4,6 @@ namespace Database;
 
 use Database\Interfaces\UpdateInterface;
 use Database\Connect;
-use Exceptions\Database\UpdateException;
 
 class Update implements UpdateInterface {
     private $db;
@@ -27,7 +26,7 @@ class Update implements UpdateInterface {
             $stmt->execute($data);
             return $stmt->rowCount();
         } catch (\PDOException $e) {
-            throw new UpdateException("Erro ao atualizar registro: " . $e->getMessage());
+            return false;
         }
     }
 }

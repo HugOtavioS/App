@@ -20,6 +20,7 @@
     "@heroui/image": "^2.2.13",
     "@mui/material": "^7.1.0",
     "@phosphor-icons/react": "^2.1.10",
+    "axios": "^1.10.0",
     "clsx": "^2.1.1",
     "motion": "^12.18.1",
     "radix-ui": "^1.4.2",

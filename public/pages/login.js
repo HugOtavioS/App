@@ -1,6 +1,7 @@
 import { createRoot } from '/node_modules/react-dom/client';
-import React from "react";
-import { ArrowRight, LockSimple, EnvelopeSimple, GoogleLogo } from '/node_modules/@phosphor-icons/react';
+import React, { useEffect, useState } from "react";
+import { ArrowRight, LockSimple, EnvelopeSimple, GoogleLogo, WarningCircle } from '/node_modules/@phosphor-icons/react';
+import axios from "/node_modules/axios";
 import HeaderCommon from './components/headerCommon';
 import Footer from './components/footer';
 import { Button } from './components/buttons/movingBorder';
@@ -10,6 +11,105 @@ import { BackgroundBeams } from './components/background-beams';
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 function Login() {
   const words = "Bem-vindo de volta ao Appy! Entre e continue organizando sua vida com simplicidade.";
+  const [resForm, setResForm] = useState({
+    email: "",
+    password: "",
+    statusLogin: ""
+  });
+  const errors = {
+    passUndefined: "Digite a sua senha!",
+    emailUndefined: "Digite seu email!",
+    userNotFound: "Nenhum usuário encontrado!",
+    userFound: "Nenhum encontrado! Redirecionando..."
+  };
+  const viewErrors = {
+    passUndefined: /*#__PURE__*/_jsxs("div", {
+      className: "mt-2 text-sm text-red-600 bg-red-100/75 border border-red-300 rounded-lg px-3 py-2 flex items-center gap-2",
+      children: [/*#__PURE__*/_jsx(WarningCircle, {
+        size: 24
+      }), /*#__PURE__*/_jsx("span", {
+        children: errors.passUndefined
+      })]
+    }),
+    emailUndefined: /*#__PURE__*/_jsxs("div", {
+      className: "mt-2 text-sm text-red-600 bg-red-100/75 border border-red-300 rounded-lg px-3 py-2 flex items-center gap-2",
+      children: [/*#__PURE__*/_jsx(WarningCircle, {
+        size: 24
+      }), /*#__PURE__*/_jsx("span", {
+        children: errors.emailUndefined
+      })]
+    }),
+    userNotFound: /*#__PURE__*/_jsxs("div", {
+      className: "mt-2 text-sm text-red-600 bg-red-100/75 border border-red-300 rounded-lg px-3 py-2 flex items-center gap-2",
+      children: [/*#__PURE__*/_jsx(WarningCircle, {
+        size: 24
+      }), /*#__PURE__*/_jsx("span", {
+        children: errors.userNotFound
+      })]
+    }),
+    userFound: /*#__PURE__*/_jsxs("div", {
+      className: "mt-2 text-sm text-green-600 bg-green-100/75 border border-freen-300 rounded-lg px-3 py-2 flex items-center gap-2",
+      children: [/*#__PURE__*/_jsx(WarningCircle, {
+        size: 24
+      }), /*#__PURE__*/_jsx("span", {
+        children: errors.userFound
+      })]
+    })
+  };
+  const handleForm = async event => {
+    event.preventDefault();
+    const formEmail = event.target.email.value;
+    const formPassword = event.target.password.value;
+    setResForm(prev => ({
+      ...prev,
+      statusLogin: ""
+    }));
+    if (formEmail == "") {
+      setResForm(prev => ({
+        ...prev,
+        email: "false"
+      }));
+    } else {
+      setResForm(prev => ({
+        ...prev,
+        email: "true"
+      }));
+    }
+    if (formPassword == "") {
+      setResForm(prev => ({
+        ...prev,
+        password: "false"
+      }));
+    } else {
+      setResForm(prev => ({
+        ...prev,
+        password: "true"
+      }));
+    }
+    if (formEmail == "" || formPassword == "") {
+      return;
+    }
+    await axios.post("/api/login", {
+      email: formEmail,
+      password: formPassword
+    }, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(function (response) {
+      if (response.data == "false") {
+        setResForm(prev => ({
+          ...prev,
+          statusLogin: "false"
+        }));
+      } else {
+        setResForm(prev => ({
+          ...prev,
+          statusLogin: "true"
+        }));
+      }
+    });
+  };
   return /*#__PURE__*/_jsxs(_Fragment, {
     children: [/*#__PURE__*/_jsx(HeaderCommon, {}), /*#__PURE__*/_jsxs("main", {
       className: "relative min-h-screen w-full pt-32 pb-16",
@@ -31,7 +131,7 @@ function Login() {
                 }), /*#__PURE__*/_jsx("div", {
                   className: "mb-8",
                   children: /*#__PURE__*/_jsxs("button", {
-                    className: "w-full flex items-center justify-center gap-2 bg-white text-[#06202B] border-2 border-[#06202B] rounded-lg px-4 py-3 font-medium hover:bg-[#06202B] hover:text-white transition-colors",
+                    className: "w-full flex items-center justify-center gap-2 bg-white text-[#06202B] border-2 border-[#06202B] rounded-lg cursor-pointer px-4 py-3 font-medium hover:bg-[#06202B] hover:text-white transition-colors",
                     children: [/*#__PURE__*/_jsx(GoogleLogo, {
                       size: 24
                     }), "Continuar com Google"]
@@ -51,10 +151,11 @@ function Login() {
                     })
                   })]
                 }), /*#__PURE__*/_jsxs("form", {
-                  method: "POST",
-                  action: "/login",
+                  onSubmit: event => {
+                    handleForm(event);
+                  },
                   className: "space-y-6",
-                  children: [/*#__PURE__*/_jsxs("div", {
+                  children: [resForm.statusLogin == "false" && viewErrors["userNotFound"], resForm.statusLogin == "true" && viewErrors["userFound"], /*#__PURE__*/_jsxs("div", {
                     children: [/*#__PURE__*/_jsx("label", {
                       htmlFor: "email",
                       className: "block text-sm font-medium text-gray-700 mb-2",
@@ -72,7 +173,7 @@ function Login() {
                         className: "w-full pl-10 px-4 py-3 rounded-lg bg-gray-50 border border-gray-300 focus:ring-2 focus:ring-[#06202B] focus:border-transparent",
                         placeholder: "seu@email.com"
                       })]
-                    })]
+                    }), resForm.email == "false" && viewErrors["emailUndefined"]]
                   }), /*#__PURE__*/_jsxs("div", {
                     children: [/*#__PURE__*/_jsx("label", {
                       htmlFor: "password",
@@ -91,7 +192,7 @@ function Login() {
                         className: "w-full pl-10 px-4 py-3 rounded-lg bg-gray-50 border border-gray-300 focus:ring-2 focus:ring-[#06202B] focus:border-transparent",
                         placeholder: "********"
                       })]
-                    })]
+                    }), resForm.password == "false" && viewErrors["passUndefined"]]
                   }), /*#__PURE__*/_jsxs("div", {
                     className: "flex items-center justify-between",
                     children: [/*#__PURE__*/_jsxs("div", {

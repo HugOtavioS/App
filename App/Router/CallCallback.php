@@ -4,10 +4,6 @@ namespace Router;
 
 use Router\Interfaces\CallCallbackInterface;
 
-use Exceptions\Router\ControllerNotObject;
-use Exceptions\Router\ControllerClassNotFound;
-use Exceptions\Router\ControllerMethodNotFound;
-
 class CallCallback implements CallCallbackInterface {
 
     private $callback;
@@ -18,9 +14,9 @@ class CallCallback implements CallCallbackInterface {
 
     public function callCallback() {
         $callback = $this->callback;
-
-        if (!is_callable($callback)) {
+        if (is_array($callback)) {
             $this->callController($callback);
+            return;
         }
 
         $callback();
@@ -30,15 +26,15 @@ class CallCallback implements CallCallbackInterface {
         $controller = new $callback[0];
 
         if (!is_object($controller)) {
-            throw new ControllerNotObject();
+            return false;
         }
 
         if (!class_exists($callback[0])) {
-            throw new ControllerClassNotFound();
+            return false;
         }
 
         if (!method_exists($controller, $callback[1])) {
-            throw new ControllerMethodNotFound($callback[1]);
+            return false;
         }
 
         $controller->{$callback[1]}();

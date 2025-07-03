@@ -1,5 +1,7 @@
 <?php
 
+use App\Controllers\LoginController;
+use App\Controllers\RegisterController;
 use Router\Router;
 use Models\ViewLoader;
 
@@ -23,9 +25,9 @@ Router::addRoute('GET', '/login', function() {
     $view->load("login");
 });
 
-Router::addRoute('POST', '/login', function() {
-    echo "Ola";
-});
+Router::addApiRoute('POST', '/api/login', [LoginController::class, "index"]);
+
+Router::addApiRoute('POST', '/api/register', [RegisterController::class, "index"]);
 
 Router::addRoute('GET', '/register', function() {
     $view = new ViewLoader();

@@ -1,6 +1,7 @@
 import { createRoot } from '/node_modules/react-dom/client';
-import React from "react";
-import { ArrowRight, LockSimple, EnvelopeSimple, GoogleLogo } from '/node_modules/@phosphor-icons/react';
+import React, { useEffect, useState } from "react";
+import { ArrowRight, LockSimple, EnvelopeSimple, GoogleLogo, WarningCircle } from '/node_modules/@phosphor-icons/react';
+import axios from "/node_modules/axios";
 
 import HeaderCommon from './components/headerCommon';
 import Footer from './components/footer';
@@ -11,6 +12,108 @@ import { BackgroundBeams } from './components/background-beams';
 
 function Login() {
     const words = "Bem-vindo de volta ao Appy! Entre e continue organizando sua vida com simplicidade.";
+    const [resForm, setResForm] = useState({
+        email: "",
+        password: "",
+        statusLogin: ""
+    });
+
+    const errors = {
+        passUndefined: "Digite a sua senha!",
+        emailUndefined: "Digite seu email!",
+        userNotFound: "Nenhum usuário encontrado!",
+        userFound: "Nenhum encontrado! Redirecionando...",
+    }
+
+    const viewErrors = {
+        passUndefined: (
+            <div className="mt-2 text-sm text-red-600 bg-red-100/75 border border-red-300 rounded-lg px-3 py-2 flex items-center gap-2">
+                <WarningCircle size={24} />
+                <span>{errors.passUndefined}</span>
+            </div>
+        ),
+        emailUndefined: (
+            <div className="mt-2 text-sm text-red-600 bg-red-100/75 border border-red-300 rounded-lg px-3 py-2 flex items-center gap-2">
+                <WarningCircle size={24} />
+                <span>{errors.emailUndefined}</span>
+            </div>
+        ),
+        userNotFound: (
+            <div className="mt-2 text-sm text-red-600 bg-red-100/75 border border-red-300 rounded-lg px-3 py-2 flex items-center gap-2">
+                <WarningCircle size={24} />
+                <span>{errors.userNotFound}</span>
+            </div>
+        ),
+        userFound: (
+            <div className="mt-2 text-sm text-green-600 bg-green-100/75 border border-freen-300 rounded-lg px-3 py-2 flex items-center gap-2">
+                <WarningCircle size={24} />
+                <span>{errors.userFound}</span>
+            </div>
+        )
+    }
+
+    const handleForm = async (event) => {
+
+        event.preventDefault();
+        const formEmail = event.target.email.value;
+        const formPassword = event.target.password.value;
+
+        setResForm(prev => ({
+            ...prev,
+            statusLogin: ""
+        }))
+
+        if (formEmail == "") {
+            setResForm(prev => ({
+                ...prev,
+                email: "false"
+            }));
+        } else {
+            setResForm(prev => ({
+                ...prev,
+                email: "true"
+            }));
+        }
+
+        if (formPassword == "") {
+            setResForm(prev => ({
+                ...prev,
+                password: "false",
+            }));
+        } else {
+            setResForm(prev => ({
+                ...prev,
+                password: "true",
+            }));
+        }
+
+        if (formEmail == "" || formPassword == "") {
+            return;
+        }
+
+        await axios.post("/api/login", {
+            email: formEmail,
+            password: formPassword
+        }, {
+            headers: {
+            'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then(function (response) {
+            if (response.data == "false") {
+                setResForm(prev => ({
+                    ...prev,
+                    statusLogin: "false"
+                }));
+            } else {
+                setResForm(prev => ({
+                    ...prev,
+                    statusLogin: "true"
+                }));
+            }
+        })
+
+    }
 
     return (
         <>
@@ -29,7 +132,7 @@ function Login() {
                                     
                                     {/* Social Login */}
                                     <div className="mb-8">
-                                        <button className="w-full flex items-center justify-center gap-2 bg-white text-[#06202B] border-2 border-[#06202B] rounded-lg px-4 py-3 font-medium hover:bg-[#06202B] hover:text-white transition-colors">
+                                        <button className="w-full flex items-center justify-center gap-2 bg-white text-[#06202B] border-2 border-[#06202B] rounded-lg cursor-pointer px-4 py-3 font-medium hover:bg-[#06202B] hover:text-white transition-colors">
                                             <GoogleLogo size={24} />
                                             Continuar com Google
                                         </button>
@@ -45,7 +148,10 @@ function Login() {
                                     </div>
 
                                     {/* Login Form */}
-                                    <form method='POST' action="/login" className="space-y-6">
+                                    <form onSubmit={(event) => {handleForm(event)}} className="space-y-6">
+                                        {resForm.statusLogin == "false" && viewErrors["userNotFound"]}
+                                        {resForm.statusLogin == "true" && viewErrors["userFound"]}
+
                                         <div>
                                             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                                                 Email
@@ -61,6 +167,7 @@ function Login() {
                                                     placeholder="seu@email.com"
                                                 />
                                             </div>
+                                            {resForm.email == "false" && viewErrors["emailUndefined"]}
                                         </div>
                                         
                                         <div>
@@ -78,6 +185,7 @@ function Login() {
                                                     placeholder="********"
                                                 />
                                             </div>
+                                            {resForm.password == "false" && viewErrors["passUndefined"]}
                                         </div>
 
                                         <div className="flex items-center justify-between">

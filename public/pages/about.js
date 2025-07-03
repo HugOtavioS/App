@@ -226,8 +226,11 @@ function Home() {
         }), /*#__PURE__*/_jsxs("div", {
           className: "flex flex-col md:flex-row items-center gap-8",
           children: [/*#__PURE__*/_jsx("div", {
-            className: "w-32 h-32 rounded-full bg-gradient-to-r from-[#06202B] to-[#D4C9BE] flex items-center justify-center text-white text-4xl font-bold",
-            children: "HP"
+            className: "w-32 h-32 rounded-full overflow-hidden bg-gradient-to-r from-[#06202B] to-[#D4C9BE] flex items-center justify-center text-white text-4xl font-bold",
+            children: /*#__PURE__*/_jsx("img", {
+              src: "/images/Perfil_2.jpg",
+              alt: ""
+            })
           }), /*#__PURE__*/_jsxs("div", {
             className: "flex-1",
             children: [/*#__PURE__*/_jsx("h3", {

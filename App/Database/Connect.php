@@ -3,7 +3,6 @@
 namespace Database;
 
 use Database\Interfaces\ConnectInterface;
-use Exceptions\Database\ConnectException;
 
 class Connect implements ConnectInterface {
     private $host;
@@ -26,7 +25,7 @@ class Connect implements ConnectInterface {
             $this->db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             return $this->db;
         } catch (\PDOException $e) {
-            throw new ConnectException("Erro ao conectar ao banco de dados: " . $e->getMessage());
+            return false;
         }
     }
 

@@ -2,8 +2,6 @@
 
 namespace Models;
 
-use Exceptions\Views\ViewNotFound;
-
 class ViewLoader {
     public static function load($view, $data = []) {
         try {
@@ -11,12 +9,12 @@ class ViewLoader {
             $view = VIEWS_PATH . $view . '.php';
 
             if (!file_exists($view)) {
-                throw new ViewNotFound();
+                return false;
             }
 
             require $view;
         } catch (\Exception $e) {
-            throw new ViewNotFound("Erro ao carregar a view: " . $e->getMessage());
+            return false;
         }
     }
 }

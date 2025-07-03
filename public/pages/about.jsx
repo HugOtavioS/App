@@ -146,8 +146,8 @@ function Home() {
                 <div className='bg-[#D4C9BE]/10 p-8 rounded-2xl shadow-lg w-full max-w-6xl mb-16'>
                     <h2 className='text-2xl font-bold mb-6 text-[#06202B]'>Desenvolvedor</h2>
                     <div className='flex flex-col md:flex-row items-center gap-8'>
-                        <div className='w-32 h-32 rounded-full bg-gradient-to-r from-[#06202B] to-[#D4C9BE] flex items-center justify-center text-white text-4xl font-bold'>
-                            HP
+                        <div className='w-32 h-32 rounded-full overflow-hidden bg-gradient-to-r from-[#06202B] to-[#D4C9BE] flex items-center justify-center text-white text-4xl font-bold'>
+                            <img src="/images/Perfil_2.jpg" alt="" />
                         </div>
                         <div className='flex-1'>
                             <h3 className='text-xl font-bold text-[#06202B] mb-2'>Hugo Otávio dos Santos de Paula</h3>
